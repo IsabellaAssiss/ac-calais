@@ -2,7 +2,7 @@
 
 > Atualização: to-spec e to-tickets foram usadas depois, nas issues #8, #9 e #10.
 
-**O que você pediu e não foi feito:** `to-spec` e `to-tickets` não foram usadas, então o incremento **não** teve o processo completo. As duas skills estão configuradas para só você poder invocá-las, e o erro retornado pedia para não reproduzir o fluxo delas. Detalhes em `docs/pendencias.md`.
+**O que você pediu e não foi feito:** `to-spec` e `to-tickets` não foram usadas, então o incremento **não** teve o processo completo. As duas skills estão configuradas para só você poder invocá-las, e o erro retornado pedia para não reproduzir o fluxo delas.
 
 ## O que ficou pronto
 
@@ -46,7 +46,7 @@
 
 ## Pendências
 
-Estão em `docs/pendencias.md`. As principais são:
+A lista atual está em `docs/pendencias.md`. Naquela noite, as principais eram:
 
 1. **Confirmar o sorteio de 4 dos 5 monstros**, que é uma mudança no jogo que você não pediu literalmente.
 2. **Decidir as issues #1 e #5.**

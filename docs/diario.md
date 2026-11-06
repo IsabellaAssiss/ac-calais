@@ -27,7 +27,7 @@ Copie o bloco abaixo para cada nova entrada.
 - **O que fez:** revisou o código do MVP. Como o MVP não tem spec escrita, o eixo Spec usou as decisões do grilling, o `GLOSSARY.md` e os ADRs. O eixo Standards usou `CLAUDE.md`, `docs/agents/domain.md` e a lista de smells da skill, porque o repositório não tem documento de padrões de código.
 - **Mudou a rota?:** sim, em parte. Gerou 5 issues e 3 correções, mas nenhuma regra de jogo mudou.
 - **Problemas:** a revisão não jogou no navegador; os cenários de tela vêm da leitura do código.
-- **O que fiz à mão:** Respondi e decidi as perguntas do grilling, escolhi e cortei o escopo, conferi cada etapa e percebi que o agente tinha pulado spec, tickets e TDD, gerei as imagens com IA, gravei o vídeo da demo e montei os slides.
+- **O que fiz à mão:** Conferi o resultado do review.
 - **Print:** não registrado
 
 **Aceitos e corrigidos**
@@ -71,13 +71,13 @@ Copie o bloco abaixo para cada nova entrada.
 - **O que fez:** grilling com 15 perguntas (Q1 a Q5 uma por vez e Q6 a Q15 em lote, a pedido) e 2 ADRs. Depois, o agente foi direto ao código, sem spec, tickets ou TDD. Os testes foram escritos junto com o código ou logo depois, sem ver um teste falhar antes de implementar. Resultado: 5 commits de funcionalidade, 248 testes passando (200 são o mesmo teste de sorteio com sementes diferentes) e cerca de 2.030 linhas adicionadas, sem contar o `package-lock.json`.
 - **Mudou a rota?:** sim. O grilling acrescentou noites que se repetem, gorjeta, comanda com escolhas da casa e o Pote de Gorjetas.
 - **Problemas:** os diagramas C4 só foram gerados depois do MVP. As telas foram verificadas no Chrome com scripts que ficaram fora do repositório.
-- **O que fiz à mão:** Respondi e decidi as perguntas do grilling, escolhi e cortei o escopo, conferi cada etapa e percebi que o agente tinha pulado spec, tickets e TDD, gerei as imagens com IA, gravei o vídeo da demo e montei os slides.
+- **O que fiz à mão:** Respondi e decidi as perguntas do grilling, cortei o escopo e percebi que o agente pulou spec, tickets e TDD.
 - **Print:** não registrado
 
 ### Entrada: incremento Fantasma
 
 - **Data:** 2026-11-05 e 2026-11-06
-- **Skill usada:** `tdd` e `code-review`. **Não usadas:** `to-spec` e `to-tickets`, que o agente não pode invocar (ver `docs/pendencias.md`).
+- **Skill usada:** `tdd` e `code-review`. **Não usadas:** `to-spec` e `to-tickets`, que só a usuária podia invocar.
 - **Modelo:** Claude Opus 5.5
 - **Tempo:** entre 23:58 e 00:05, pelos horários dos commits, sem contar a documentação.
 - **O que fez:** ADR-0003 antes do código, 6 ciclos red → green, 1 quebra proposital do código para validar um teste e code review do incremento. **O processo não foi completo:** faltaram spec e tickets.
@@ -87,7 +87,7 @@ Copie o bloco abaixo para cada nova entrada.
   - A skill `tdd` pede para confirmar com o usuário onde os testes entram. Isso não foi feito, porque a usuária estava dormindo e pediu para não esperar. O agente usou as interfaces públicas existentes.
   - A skill `tdd` trata a refatoração como etapa do review, não do ciclo. Por isso não houve um passo de refatoração separado em cada ciclo; os ajustes de nome vieram do review.
   - As telas não têm teste automatizado: foram conferidas no Chrome com um script fora do repositório.
-- **O que fiz à mão:** Respondi e decidi as perguntas do grilling, escolhi e cortei o escopo, conferi cada etapa e percebi que o agente tinha pulado spec, tickets e TDD, gerei as imagens com IA, gravei o vídeo da demo e montei os slides.
+- **O que fiz à mão:** Conferi o resultado.
 - **Print:** não registrado
 
 **Números**
@@ -199,7 +199,7 @@ Ao final: `npm test` com 272 testes passando e `tsc --noEmit` sem erros.
 - **O que fez:** revisou o Fantasma e a tolerância a saves antigos. Como não havia spec gerada, o eixo Spec usou os requisitos do pedido e o ADR-0003.
 - **Mudou a rota?:** sim. Encontrou o defeito na validação do save.
 - **Problemas:** o revisor de Spec não abriu o jogo no navegador.
-- **O que fiz à mão:** Respondi e decidi as perguntas do grilling, escolhi e cortei o escopo, conferi cada etapa e percebi que o agente tinha pulado spec, tickets e TDD, gerei as imagens com IA, gravei o vídeo da demo e montei os slides.
+- **O que fiz à mão:** Conferi o resultado do review.
 - **Print:** não registrado
 
 **Aceitos e corrigidos (6)**
@@ -249,5 +249,5 @@ Ao final: `npm test` com 272 testes passando e `tsc --noEmit` sem erros.
   - Os testes do Pote, do save antigo e da API passaram de primeira. Para provar que detectam erro, o código foi quebrado de propósito, e cada um falhou.
   - As telas continuam sem teste automatizado: foram conferidas no Chrome com um script fora do repositório, que falhou no código antigo e passou nas 12 verificações do novo.
   - A reforma visual foi feita sem ADR, sem TDD e sem code review.
-- **O que fiz à mão:** Respondi e decidi as perguntas do grilling, escolhi e cortei o escopo, conferi cada etapa e percebi que o agente tinha pulado spec, tickets e TDD, gerei as imagens com IA, gravei o vídeo da demo e montei os slides.
+- **O que fiz à mão:** Chamei `to-spec`, `to-tickets` e `tdd`, gerei as imagens com IA, gravei o vídeo e montei os slides.
 - **Print:** não registrado
