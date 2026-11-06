@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IDS_INGREDIENTES, INGREDIENTES, MONSTROS, type Ingrediente } from "../game/conteudo.ts";
 import {
+  avaliarLanche,
   clienteAtual,
   ganhosDaNoite,
   GORJETA,
@@ -12,6 +13,7 @@ import {
 import { EfeitosDaTela, Monstro, NovaAnotacao, Rachadura } from "./Efeitos.tsx";
 import { ImagemIngrediente } from "./ImagemIngrediente.tsx";
 import { notasDoLanche, type Notas } from "./notas.ts";
+import { alternarMudo, estaMudo, tocarBoing, tocarExplosao, tocarMoeda } from "./sons.ts";
 
 type Props = {
   noite: Noite;
@@ -45,6 +47,7 @@ export function TelaNoite({ noite, aoServir, aoSeguir, aoAbrirLivro }: Props) {
           <button className="botao-hud" aria-label="Abrir o Livro de Manias" onClick={aoAbrirLivro}>
             📖
           </button>
+          <BotaoSom />
         </div>
       </header>
 
@@ -66,6 +69,8 @@ export function TelaNoite({ noite, aoServir, aoSeguir, aoAbrirLivro }: Props) {
           cliente={clienteAtual(noite)!}
           aoServir={(lanche) => {
             setUltimoLanche(lanche);
+            if (avaliarLanche(clienteAtual(noite)!, lanche) === "desastre") tocarExplosao();
+            else tocarMoeda();
             aoServir(lanche);
             setReacaoVisivel(true);
           }}
@@ -81,6 +86,20 @@ export function TelaNoite({ noite, aoServir, aoSeguir, aoAbrirLivro }: Props) {
         </div>
       )}
     </main>
+  );
+}
+
+function BotaoSom() {
+  const [mudo, setMudo] = useState(estaMudo);
+  return (
+    <button
+      className="botao-hud"
+      aria-label={mudo ? "Ligar o som" : "Desligar o som"}
+      aria-pressed={mudo}
+      onClick={() => setMudo(alternarMudo())}
+    >
+      {mudo ? "🔇" : "🔊"}
+    </button>
   );
 }
 
@@ -138,7 +157,10 @@ function Montagem({
               key={id}
               className="ingrediente"
               disabled={cheio}
-              onClick={() => setLanche([...lanche, id])}
+              onClick={() => {
+                tocarBoing();
+                setLanche([...lanche, id]);
+              }}
             >
               <ImagemIngrediente ingrediente={id} />
               <span className="ingrediente-nome">{INGREDIENTES[id].nome}</span>
