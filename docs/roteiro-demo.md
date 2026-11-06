@@ -27,7 +27,7 @@ Cada noite sorteia 4 dos 5 monstros, então a ordem e os clientes mudam. Use o m
 
 | Monstro | Regra óbvia (desastre) | Escolhas da casa perfeitas |
 | --- | --- | --- |
-| Drácula | Sem Alho | Molho vermelho + outro ingrediente permitido |
+| Vampira | Sem Alho | Molho vermelho + outro ingrediente permitido |
 | Lobisomem | Sem Sal de prata | Carne + outro ingrediente permitido |
 | Múmia | Sem Molho vermelho | Picles + outro ingrediente permitido |
 | Zumbi | Precisa ter Cérebro | Cérebro + Cérebro |

@@ -33,7 +33,7 @@ O desbloqueio da loja, de compra única, que dobra a gorjeta nas noites seguinte
 _Avoid_: Upgrade, power-up
 
 **Monstro**:
-Um dos cinco tipos de cliente: Drácula, Lobisomem, Múmia, Zumbi ou Fantasma.
+Um dos cinco tipos de cliente: Vampira, Lobisomem, Múmia, Zumbi ou Fantasma.
 _Avoid_: Vampiro, personagem
 
 **Ingrediente**:

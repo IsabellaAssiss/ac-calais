@@ -216,16 +216,21 @@ input:focus-visible {
   transform-origin: 50% 100%;
 }
 
-.retrato-emoji {
+.retrato-img {
   display: block;
-  font-size: var(--tamanho-monstro, 96px);
-  line-height: 1;
+  height: var(--tamanho-monstro, 96px);
+  max-width: calc(var(--tamanho-monstro, 96px) * 1.35);
+  object-fit: contain;
+  object-position: bottom;
 }
 
-.retrato-svg {
-  display: block;
-  width: var(--tamanho-monstro, 96px);
-  height: var(--tamanho-monstro, 96px);
+.ingrediente-img {
+  height: 1.3em;
+  vertical-align: middle;
+}
+
+.ingrediente .ingrediente-img {
+  height: 44px;
 }
 
 .monstro-chegando {

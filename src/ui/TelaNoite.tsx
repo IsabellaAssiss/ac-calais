@@ -8,6 +8,7 @@ import {
   type Cliente,
   type Noite,
 } from "../game/jogo.ts";
+import { ImagemIngrediente } from "./ImagemIngrediente.tsx";
 import { EfeitosDaTela, Monstro, NovaAnotacao, Rachadura } from "./Efeitos.tsx";
 
 type Props = {
@@ -80,7 +81,7 @@ function Montagem({
           <ul>
             {cliente.comanda.itensFixos.map((item) => (
               <li key={item}>
-                {INGREDIENTES[item].emoji} {INGREDIENTES[item].nome}
+                <ImagemIngrediente ingrediente={item} /> {INGREDIENTES[item].nome}
               </li>
             ))}
             <li className="escolha-da-casa">✨ 2 à escolha da casa</li>
@@ -101,7 +102,7 @@ function Montagem({
                   title={`Remover ${INGREDIENTES[ingrediente].nome}`}
                   onClick={() => setLanche(lanche.filter((_, p) => p !== i))}
                 >
-                  {INGREDIENTES[ingrediente].emoji} {INGREDIENTES[ingrediente].nome}
+                  <ImagemIngrediente ingrediente={ingrediente} /> {INGREDIENTES[ingrediente].nome}
                 </button>
               ) : (
                 <div key={i} className="camada camada-vazia" />
@@ -121,7 +122,7 @@ function Montagem({
               disabled={cheio}
               onClick={() => setLanche([...lanche, id])}
             >
-              <span className="emoji">{INGREDIENTES[id].emoji}</span>
+              <ImagemIngrediente ingrediente={id} />
               {INGREDIENTES[id].nome}
             </button>
           ))}

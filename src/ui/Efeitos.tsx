@@ -117,7 +117,7 @@ export function Monstro({
     <div className={`monstro monstro-${monstro} monstro-${resultado ?? "chegando"}`}>
       <span className="nome-monstro">{nome}</span>
       <div className="monstro-corpo">
-        <RetratoMonstro monstro={monstro} />
+        <RetratoMonstro monstro={monstro} humor={resultado === "perfeito" ? "feliz" : resultado ? "bravo" : "normal"} />
       </div>
       <div aria-hidden="true">
         {resultado === "desastre" && <DesastreDoMonstro monstro={monstro} />}

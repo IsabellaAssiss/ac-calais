@@ -2,7 +2,7 @@
 
 Jogo web por cliques: você atende monstros numa lanchonete e descobre, errando, as regras de cada um. O jogo não avisa nada. O que você aprende fica anotado no Livro de Manias.
 
-São cinco monstros: Drácula, Lobisomem, Múmia, Zumbi e Fantasma. Cada noite tem 5 clientes: 4 monstros sorteados, e um deles volta uma segunda vez.
+São cinco monstros: Vampira, Lobisomem, Múmia, Zumbi e Fantasma. Cada noite tem 5 clientes: 4 monstros sorteados, e um deles volta uma segunda vez.
 
 ## Como rodar
 

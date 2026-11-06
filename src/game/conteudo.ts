@@ -38,12 +38,12 @@ type Monstro = {
 
 export const MONSTROS: Record<MonstroId, Monstro> = {
   dracula: {
-    nome: "Drácula",
+    nome: "Vampira",
     quebraRegraObvia: (lanche) => lanche.includes("alho"),
     atendeMania: (escolhas) => escolhas.includes("molho"),
     anotacaoRegra: "Nunca sirva Alho.",
     anotacaoMania: "Quer Molho vermelho nas escolhas da casa. Parece sangue.",
-    falaDesastre: "ALHO?! O Drácula vira um punhado de cinzas fumegantes!",
+    falaDesastre: "ALHO?! A Vampira vira um punhado de cinzas fumegantes!",
     falaMania: "Hm. Faltou algo... mais vermelho.",
     falaPerfeito: "Delicioso! Quase tão bom quanto uma jugular.",
   },

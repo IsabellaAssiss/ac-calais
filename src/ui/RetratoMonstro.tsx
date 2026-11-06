@@ -1,35 +1,27 @@
 import type { MonstroId } from "../game/conteudo.ts";
 
-const EMOJIS: Record<Exclude<MonstroId, "mumia">, string> = {
-  dracula: "🧛",
-  lobisomem: "🐺",
-  zumbi: "🧟",
-  fantasma: "👻",
+export type Humor = "normal" | "feliz" | "bravo";
+
+/** Só a Vampira tem as três poses; os outros usam a única que existe e o CSS simula o resto. */
+const POSES: Record<MonstroId, { normal: string } & Partial<Record<Humor, string>>> = {
+  dracula: { normal: "vampira-normal", feliz: "vampira-feliz", bravo: "vampira-bravo" },
+  lobisomem: { normal: "lobisomem" },
+  mumia: { normal: "mumia-feliz" },
+  zumbi: { normal: "zumbi" },
+  fantasma: { normal: "fantasma" },
 };
 
-/** Não existe emoji de múmia, então ela é desenhada em SVG. */
-function Mumia() {
-  return (
-    <svg viewBox="0 0 100 100" className="retrato-svg" role="img" aria-label="Múmia">
-      <rect x="22" y="10" width="56" height="80" rx="24" fill="#e8dfc8" />
-      <g stroke="#b3a688" strokeWidth="4" strokeLinecap="round">
-        <path d="M24 28 L76 20" />
-        <path d="M23 58 L77 50" />
-        <path d="M24 68 L76 76" />
-        <path d="M30 82 L72 86" />
-      </g>
-      <rect x="28" y="33" width="44" height="16" rx="8" fill="#23182e" />
-      <circle cx="41" cy="41" r="5" fill="#9cff57" />
-      <circle cx="59" cy="41" r="5" fill="#9cff57" />
-    </svg>
-  );
-}
+export const CAMINHOS_DOS_MONSTROS = Object.values(POSES).flatMap((poses) =>
+  Object.values(poses).map((pose) => `/assets/monstros/${pose}.png`),
+);
 
-export function RetratoMonstro({ monstro }: { monstro: MonstroId }) {
-  if (monstro === "mumia") return <Mumia />;
-  return (
-    <span className="retrato-emoji" aria-hidden="true">
-      {EMOJIS[monstro]}
-    </span>
-  );
+export function RetratoMonstro({
+  monstro,
+  humor = "normal",
+}: {
+  monstro: MonstroId;
+  humor?: Humor;
+}) {
+  const pose = POSES[monstro][humor] ?? POSES[monstro].normal;
+  return <img className="retrato-img" src={`/assets/monstros/${pose}.png`} alt="" draggable={false} />;
 }
