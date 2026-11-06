@@ -43,7 +43,7 @@ export const MONSTROS: Record<MonstroId, Monstro> = {
     atendeMania: (escolhas) => escolhas.includes("molho"),
     anotacaoRegra: "Nunca sirva Alho.",
     anotacaoMania: "Quer Molho vermelho nas escolhas da casa. Parece sangue.",
-    falaDesastre: "ALHO?! A Vampira vira um punhado de cinzas fumegantes!",
+    falaDesastre: "ALHO?! A Vampira vira morcego e foge voando sem pagar!",
     falaMania: "Hm. Faltou algo... mais vermelho.",
     falaPerfeito: "Delicioso! Quase tão bom quanto uma jugular.",
   },
