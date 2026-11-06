@@ -1,3 +1,7 @@
+## Git
+
+Projeto solo da faculdade: commits e push podem ser feitos direto na main.
+
 ## Agent skills
 
 ### Issue tracker
