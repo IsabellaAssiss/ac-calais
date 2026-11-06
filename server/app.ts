@@ -77,6 +77,13 @@ export function criarApp(caminhoDoBanco: string) {
       .get(token) as { id: number; nome: string } | undefined ?? null;
   }
 
+  /** Devolve o usuário da sessão, ou responde 401 e devolve null. */
+  function exigirUsuario(req: Request, res: Response) {
+    const usuario = usuarioDaSessao(req);
+    if (usuario === null) res.status(401).json({ erro: "Sem sessão." });
+    return usuario;
+  }
+
   const app = express();
   app.use(express.json());
 
@@ -125,20 +132,14 @@ export function criarApp(caminhoDoBanco: string) {
   });
 
   app.get("/api/sessao", (req, res) => {
-    const usuario = usuarioDaSessao(req);
-    if (usuario === null) {
-      res.status(401).json({ erro: "Sem sessão." });
-      return;
-    }
+    const usuario = exigirUsuario(req, res);
+    if (usuario === null) return;
     res.json({ nome: usuario.nome });
   });
 
   app.get("/api/save", (req, res) => {
-    const usuario = usuarioDaSessao(req);
-    if (usuario === null) {
-      res.status(401).json({ erro: "Sem sessão." });
-      return;
-    }
+    const usuario = exigirUsuario(req, res);
+    if (usuario === null) return;
     const linha = banco.prepare("SELECT progresso FROM saves WHERE usuario_id = ?").get(usuario.id) as
       | { progresso: string }
       | undefined;
@@ -146,11 +147,8 @@ export function criarApp(caminhoDoBanco: string) {
   });
 
   app.put("/api/save", (req, res) => {
-    const usuario = usuarioDaSessao(req);
-    if (usuario === null) {
-      res.status(401).json({ erro: "Sem sessão." });
-      return;
-    }
+    const usuario = exigirUsuario(req, res);
+    if (usuario === null) return;
     const progresso = lerProgresso(req.body);
     if (progresso === null) {
       res.status(400).json({ erro: "Save inválido." });
