@@ -23,7 +23,7 @@ export function TelaLogin({ aoEntrar }: { aoEntrar: (nome: string) => void }) {
 
   return (
     <main className="tela tela-login">
-      <h1 className="titulo">🧛 Monster Munchies</h1>
+      <h1 className="titulo">Monster Munchies</h1>
       <form className="painel formulario" onSubmit={aoEnviar}>
         <label>
           Nome

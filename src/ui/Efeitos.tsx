@@ -104,22 +104,13 @@ function Reclamacao({ cara, texto }: { cara: string; texto: string }) {
 }
 
 /** Sem `resultado`, o monstro está esperando no balcão. */
-export function Monstro({
-  monstro,
-  nome,
-  resultado,
-}: {
-  monstro: MonstroId;
-  nome: string;
-  resultado?: Resultado;
-}) {
+export function Monstro({ monstro, resultado }: { monstro: MonstroId; resultado?: Resultado }) {
   return (
     <div className={`monstro monstro-${monstro} monstro-${resultado ?? "chegando"}`}>
-      <span className="nome-monstro">{nome}</span>
       <div className="monstro-corpo">
         <RetratoMonstro monstro={monstro} humor={resultado === "perfeito" ? "feliz" : resultado ? "bravo" : "normal"} />
       </div>
-      <div aria-hidden="true">
+      <div className="monstro-deco" aria-hidden="true">
         {resultado === "desastre" && <DesastreDoMonstro monstro={monstro} />}
         {resultado === "maniaNaoAtendida" && <Reclamacao cara="😒" texto="#@$%!" />}
         {resultado === "pedidoErrado" && <Reclamacao cara="🤨" texto="???" />}

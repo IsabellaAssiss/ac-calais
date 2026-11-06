@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { buscarSessao, carregarSave, enviarSave, sair } from "./api.ts";
 import { progressoInicial, type Progresso } from "./game/jogo.ts";
 import { Jogo } from "./Jogo.tsx";
@@ -9,6 +9,24 @@ type Estado =
   | { fase: "login" }
   | { fase: "jogo"; nome: string; progresso: Progresso }
   | { fase: "falha"; mensagem: string };
+
+/** A tela é fixa em 960x600 e só encolhe se a janela for menor que ela. */
+function Moldura({ children }: { children: ReactNode }) {
+  const calcular = () => Math.min(1, (innerWidth - 16) / 976, (innerHeight - 16) / 616);
+  const [escala, setEscala] = useState(calcular);
+
+  useEffect(() => {
+    const aoRedimensionar = () => setEscala(calcular());
+    addEventListener("resize", aoRedimensionar);
+    return () => removeEventListener("resize", aoRedimensionar);
+  }, []);
+
+  return (
+    <div className="moldura" style={{ transform: `scale(${escala})` }}>
+      {children}
+    </div>
+  );
+}
 
 export function App() {
   const [estado, setEstado] = useState<Estado>({ fase: "carregando" });
@@ -46,25 +64,44 @@ export function App() {
     setEstado({ fase: "login" });
   }
 
-  if (estado.fase === "carregando") return <main className="tela aviso">Abrindo a lanchonete...</main>;
-  if (estado.fase === "falha") return <main className="tela aviso">{estado.mensagem}</main>;
-  if (estado.fase === "login") return <TelaLogin aoEntrar={abrirJogo} />;
+  if (estado.fase === "carregando") {
+    return (
+      <Moldura>
+        <main className="tela aviso">Abrindo a lanchonete...</main>
+      </Moldura>
+    );
+  }
+  if (estado.fase === "falha") {
+    return (
+      <Moldura>
+        <main className="tela aviso">{estado.mensagem}</main>
+      </Moldura>
+    );
+  }
+  if (estado.fase === "login") {
+    return (
+      <Moldura>
+        <TelaLogin aoEntrar={abrirJogo} />
+      </Moldura>
+    );
+  }
 
   return (
     <>
       <div className="conta">
-        <span className="letreiro">Monster Munchies</span>
         <span>{estado.nome}</span>
         <button className="botao-link" onClick={aoSair}>
           Sair
         </button>
       </div>
-      {falhaAoSalvar && (
-        <p className="erro erro-save" role="alert">
-          Não foi possível salvar o progresso. Verifique o servidor.
-        </p>
-      )}
-      <Jogo progressoSalvo={estado.progresso} salvar={salvar} />
+      <Moldura>
+        <Jogo progressoSalvo={estado.progresso} salvar={salvar} />
+        {falhaAoSalvar && (
+          <p className="erro erro-save" role="alert">
+            Não foi possível salvar o progresso. Verifique o servidor.
+          </p>
+        )}
+      </Moldura>
     </>
   );
 }
