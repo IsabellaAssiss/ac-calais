@@ -8,20 +8,20 @@
 npm start
 ```
 
-Abra <http://localhost:3001> e crie uma conta nova, para começar com o Livro em branco.
+Abra <http://localhost:3001>, espere o carregamento, clique em **JOGAR!** e crie uma conta nova, para começar com o Livro em branco. As fontes vêm do Google: sem internet, o jogo funciona com letras comuns.
 
 ## Roteiro
 
 Cada noite sorteia 4 dos 5 monstros, então a ordem e os clientes mudam. Use o monstro que aparecer.
 
 1. **Comanda:** mostre os 2 itens fixos e as 2 escolhas da casa. Explique que o jogo não avisa nenhuma regra.
-2. **Desastre:** quebre a regra óbvia do primeiro cliente, usando a tabela abaixo. Mostre a reação, o "Não pagou nada!" e a "Nova anotação no Livro!".
+2. **Desastre:** quebre a regra óbvia do primeiro cliente, usando a tabela abaixo. Mostre a tela tremendo, o BOOM!, a reação do monstro, o "$0!" com as notas de Pedido, Regras e Mania, e o "NOVA ANOTAÇÃO NO LIVRO!".
 3. **Livro:** abra o Livro de Manias e mostre a regra anotada e os `???` no resto.
-4. **Mania:** no próximo cliente, respeite a regra e não atenda a mania. Ele paga, sem gorjeta, e reclama.
-5. **Acerto:** atenda os demais com as escolhas da tabela e mostre a gorjeta.
+4. **Mania:** no próximo cliente, respeite a regra e não atenda a mania. Ele paga, sem gorjeta, e fica emburrado, com a nuvem de rabisco.
+5. **Acerto:** atenda os demais com as escolhas da tabela e mostre as moedas voando para o pote.
 6. **Fim de dia:** mostre o dinheiro e compre o Pote de Gorjetas por $30, se tiver dinheiro.
 7. **Noite 2:** clique em "Próxima noite" e mostre a gorjeta dobrada, de $10, e o erro evitado.
-8. **Save:** no início da noite, recarregue a página para mostrar que o progresso continua lá.
+8. **Save:** no início da noite, recarregue a página, clique em **JOGAR!** e mostre que o progresso continua lá.
 
 ## Respostas
 
@@ -42,4 +42,5 @@ Ele atravessa a parede sem pagar se receber Sal de prata. Como é sorteado, pode
 ## Cuidados
 
 - **Não recarregue a página na tela de fim de dia.** O jogo pula para a noite seguinte, e a loja só volta ao fim dela (issue #1).
-- **Sair** volta para a tela de login, e o progresso continua salvo.
+- **Sair** volta para a tela de login, e o progresso continua salvo. Em janelas pequenas, ele fica na tela de pausa.
+- **Pausa e som:** a pausa congela as animações, mas o jogo não tem cronômetro. O botão de som fica no canto superior direito.

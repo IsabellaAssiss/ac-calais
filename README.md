@@ -29,6 +29,7 @@ npm run build
 ## Documentação
 
 - `docs/roteiro-demo.md`: roteiro da apresentação, com as respostas do jogo
+- `docs/apresentacao.md`: dados do projeto para os slides
 - `GLOSSARY.md`: vocabulário do jogo
 - `docs/adr/`: decisões de arquitetura
 - `docs/c4/`: diagramas C4, gerados depois do MVP
