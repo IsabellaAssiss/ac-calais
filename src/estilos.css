@@ -302,6 +302,68 @@ button:focus-visible {
   height: 56px;
 }
 
+.aviso {
+  padding-top: 80px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.conta {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 10px 20px 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  color: var(--suave);
+}
+
+.botao-link {
+  padding: 0;
+  color: var(--destaque);
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+.tela-login {
+  max-width: 420px;
+  padding-top: 60px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.formulario label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.formulario input {
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--texto);
+  background: var(--fundo);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+}
+
+.erro {
+  margin: 0;
+  font-weight: bold;
+  color: var(--vermelho);
+}
+
+.erro-save {
+  text-align: center;
+  padding: 8px 20px 0;
+}
+
 .reacao {
   display: flex;
   flex-direction: column;

@@ -9,6 +9,9 @@ jspm_packages/
 !.yarn/sdks
 !.yarn/versions
 
+# Banco de dados local
+data/
+
 # Build e cache
 dist/
 build/

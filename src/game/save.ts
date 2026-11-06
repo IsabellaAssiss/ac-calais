@@ -18,17 +18,3 @@ export function lerProgresso(dado: unknown): Progresso | null {
   });
   return paginasValidas ? (dado as Progresso) : null;
 }
-
-const CHAVE = "monster-munchies:save";
-
-export function carregarDoNavegador(armazenamento: Pick<Storage, "getItem">): Progresso | null {
-  try {
-    return lerProgresso(JSON.parse(armazenamento.getItem(CHAVE) ?? "null"));
-  } catch {
-    return null;
-  }
-}
-
-export function salvarNoNavegador(armazenamento: Pick<Storage, "setItem">, progresso: Progresso) {
-  armazenamento.setItem(CHAVE, JSON.stringify(progresso));
-}
