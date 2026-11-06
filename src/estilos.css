@@ -1,14 +1,19 @@
 :root {
-  --fundo: #1a1024;
-  --painel: #2b1c3a;
-  --borda: #4d3566;
-  --texto: #f5edf9;
-  --suave: #b9a6c9;
-  --destaque: #f4e04d;
-  --verde: #6fdc8c;
+  --fundo: #1a0f2e;
+  --painel: #2a1a47;
+  --painel-claro: #3a2560;
+  --borda: #55398a;
+  --texto: #f6f0ff;
+  --suave: #c4b5dd;
+  --limao: #9cff57;
+  --abobora: #ff8c1a;
   --vermelho: #ff6b6b;
+  --papel: #e8d5a3;
+  --tinta: #2c1c10;
+  --fonte-titulo: "Creepster", "Fredoka", system-ui, cursive;
+  --fonte-manuscrita: "Caveat", "Segoe Print", cursive;
   color-scheme: dark;
-  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  font-family: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
   color: var(--texto);
   background: var(--fundo);
 }
@@ -19,8 +24,13 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(circle at 50% 0%, #3b2353, var(--fundo) 65%);
+  background: var(--fundo);
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 button {
@@ -34,12 +44,983 @@ button:disabled {
   opacity: 0.45;
 }
 
-button:focus-visible {
-  outline: 3px solid var(--destaque);
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--limao);
   outline-offset: 2px;
 }
 
+/* Botões */
+
+.botao-principal {
+  min-width: 170px;
+  padding: 14px 30px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--fundo);
+  background: var(--abobora);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 5px 0 #a85400;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+}
+
+.botao-principal:hover:enabled {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #a85400;
+}
+
+.botao-principal:active:enabled {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #a85400;
+}
+
+.botao-secundario {
+  padding: 8px 16px;
+  font-weight: 600;
+  background: var(--painel-claro);
+  border: 2px solid var(--limao);
+  border-radius: 999px;
+}
+
+.botao-secundario:hover:enabled {
+  color: var(--fundo);
+  background: var(--limao);
+}
+
+.botao-link {
+  padding: 0;
+  color: var(--limao);
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+/* Barra da conta */
+
+.conta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 20px;
+  color: var(--suave);
+}
+
+.letreiro {
+  margin-right: auto;
+  font-family: var(--fonte-titulo);
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  color: var(--abobora);
+  text-shadow: 0 0 12px rgba(255, 140, 26, 0.7);
+}
+
+/* Tela da noite */
+
+.tela-noite {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.placar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 20px;
+  padding: 8px max(20px, calc((100% - 1240px) / 2));
+  background: var(--painel);
+  border-block: 2px solid var(--borda);
+}
+
+.placar-noite {
+  font-family: var(--fonte-titulo);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--limao);
+}
+
+.placar-ganhos {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--abobora);
+}
+
+/* Cena: a parede de tijolos fica à frente do monstro, que entra e sai por trás dela. */
+
+.cena {
+  --tamanho-monstro: clamp(130px, min(38vh, 21vw), 420px);
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) minmax(260px, 1.1fr) minmax(210px, 0.8fr);
+  gap: 20px;
+  min-height: 360px;
+  padding: 16px max(84px, calc((100% - 1240px) / 2)) 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 88% 16%, #fff4c9 0 34px, rgba(156, 255, 87, 0.22) 36px, transparent 120px),
+    radial-gradient(1.5px 1.5px at 62% 12%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 44% 26%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 74% 34%, #fff 50%, transparent 51%),
+    linear-gradient(#22123d, var(--fundo));
+}
+
+.cena::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 3;
+  width: 60px;
+  background:
+    repeating-linear-gradient(#150a26 0 3px, transparent 3px 30px),
+    repeating-linear-gradient(90deg, #150a26 0 3px, transparent 3px 30px),
+    #48245c;
+  box-shadow: 6px 0 14px rgba(0, 0, 0, 0.55);
+}
+
+/* Monstro */
+
+.monstro {
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.monstro > div {
+  position: relative;
+}
+
+.nome-monstro {
+  font-family: var(--fonte-titulo);
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  color: var(--limao);
+  text-shadow: 0 2px 0 #000;
+}
+
+.monstro-corpo {
+  /* A parte de baixo fica escondida atrás do balcão. */
+  margin-bottom: calc(var(--tamanho-monstro) * -0.14);
+  transform-origin: 50% 100%;
+}
+
+.retrato-emoji {
+  display: block;
+  font-size: var(--tamanho-monstro, 96px);
+  line-height: 1;
+}
+
+.retrato-svg {
+  display: block;
+  width: var(--tamanho-monstro, 96px);
+  height: var(--tamanho-monstro, 96px);
+}
+
+.monstro-chegando {
+  animation: entrar 1.1s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.monstro-chegando .monstro-corpo {
+  animation: respirar 3s ease-in-out 1.1s infinite;
+}
+
+@keyframes entrar {
+  0% {
+    transform: translateX(-100vw) rotate(-14deg);
+  }
+  55% {
+    transform: translateX(26px) rotate(9deg);
+  }
+  75% {
+    transform: translateX(-10px) rotate(-6deg);
+  }
+  90% {
+    transform: translateX(3px) rotate(3deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes respirar {
+  50% {
+    transform: scale(1.02, 0.98) rotate(1deg);
+  }
+}
+
+/* Balão de fala */
+
+.balao {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  justify-self: stretch;
+  margin-bottom: calc(var(--tamanho-monstro) * 0.3);
+  padding: 18px 24px;
+  color: var(--fundo);
+  background: #fffdf2;
+  border: 4px solid #000;
+  border-radius: 28px;
+  box-shadow: 6px 6px 0 var(--abobora);
+  animation: balao-surgir 0.35s 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.balao::before,
+.balao::after {
+  content: "";
+  position: absolute;
+  top: 58%;
+  border-style: solid;
+  border-color: transparent;
+}
+
+.balao::before {
+  left: -34px;
+  border-width: 14px 34px 14px 0;
+  border-right-color: #000;
+}
+
+.balao::after {
+  left: -24px;
+  margin-top: 4px;
+  border-width: 10px 24px 10px 0;
+  border-right-color: #fffdf2;
+}
+
+@keyframes balao-surgir {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+.comanda h2 {
+  margin: 0 0 8px;
+  font-family: var(--fonte-titulo);
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #b85c00;
+}
+
+.comanda ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.2rem;
+  line-height: 1.7;
+}
+
+.escolha-da-casa {
+  font-weight: 700;
+}
+
+.fala {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.balao-desastre {
+  box-shadow: 6px 6px 0 var(--vermelho);
+}
+
+.balao-perfeito {
+  box-shadow: 6px 6px 0 var(--limao);
+}
+
+/* Lanche empilhado: o primeiro ingrediente fica embaixo. */
+
+.pilha {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pilha-dica {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--suave);
+}
+
+.pilha-camadas {
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 3px;
+}
+
+.camada {
+  width: 100%;
+  height: 46px;
+  padding: 0 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a0f2e;
+  border: 2px solid rgba(0, 0, 0, 0.55);
+  border-radius: 16px;
+  animation: camada-cair 0.3s cubic-bezier(0.3, 1.5, 0.6, 1);
+}
+
+button.camada:hover {
+  filter: brightness(1.15);
+  transform: translateX(4px) rotate(1deg);
+}
+
+.camada-vazia {
+  background: none;
+  border: 2px dashed var(--borda);
+  animation: none;
+}
+
+.camada-pao {
+  background: #e0ac69;
+  border-radius: 24px 24px 12px 12px;
+}
+.camada-carne {
+  background: #cf8152;
+}
+.camada-queijo {
+  background: #ffd23f;
+}
+.camada-picles {
+  background: #93c85a;
+}
+.camada-molho {
+  background: #ef6a5e;
+}
+.camada-alho {
+  background: #f4ecd6;
+}
+.camada-salDePrata {
+  background: #c9d1dc;
+}
+.camada-cerebro {
+  background: #f7a8c4;
+}
+.camada-sorveteDeNeblina {
+  background: #c8c2f5;
+}
+
+@keyframes camada-cair {
+  from {
+    opacity: 0;
+    transform: translateY(-70px);
+  }
+}
+
+.prato {
+  width: 112%;
+  height: 16px;
+  margin-top: 3px;
+  background: linear-gradient(#f4f1ff, #a99dc9);
+  border-radius: 50% 50% 4px 4px;
+}
+
+/* Balcão */
+
+.balcao {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 24px;
+  padding: 26px 20px 16px;
+  background: linear-gradient(#45256f, #2a1447);
+  box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.balcao::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 14px;
+  background: repeating-conic-gradient(var(--abobora) 0 25%, #12091f 0 50%) 0 0 / 28px 28px;
+}
+
+.balcao > :not(.rachadura) {
+  position: relative;
+  z-index: 1;
+}
+
+.balcao-reacao {
+  min-height: 150px;
+  gap: 14px 40px;
+}
+
+.estacao {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ingrediente {
+  width: clamp(92px, 8vw, 110px);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.05;
+  background: radial-gradient(circle at 35% 28%, #6a44a5, var(--painel));
+  border: 3px solid var(--limao);
+  border-radius: 50%;
+  box-shadow: 0 5px 0 #12091f;
+  transition:
+    transform 0.12s,
+    box-shadow 0.12s;
+}
+
+.ingrediente:hover:enabled {
+  border-color: var(--abobora);
+  transform: translateY(-6px) rotate(-4deg);
+  box-shadow: 0 11px 0 #12091f;
+}
+
+.ingrediente:active:enabled {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #12091f;
+}
+
+.emoji {
+  display: block;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.valores {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--limao);
+}
+
+/* Efeitos que tomam a tela */
+
+.efeitos {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tremendo {
+  animation: tremer 0.65s ease-in-out;
+}
+
+@keyframes tremer {
+  10%,
+  50%,
+  90% {
+    transform: translate(-12px, 5px) rotate(-0.6deg);
+  }
+  30%,
+  70% {
+    transform: translate(12px, -5px) rotate(0.6deg);
+  }
+}
+
+.efeitos-desastre::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ff3b1a;
+  opacity: 0;
+  animation: clarao 0.45s ease-out;
+}
+
+@keyframes clarao {
+  0% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.faisca {
+  position: absolute;
+  top: 48%;
+  left: 24%;
+  font-size: var(--tamanho);
+  opacity: 0;
+  animation: faisca 1.1s var(--atraso) ease-out both;
+}
+
+@keyframes faisca {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.3);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(1.3) rotate(120deg);
+  }
+}
+
+.moeda {
+  position: absolute;
+  top: -60px;
+  left: var(--x);
+  font-size: var(--tamanho);
+  opacity: 0;
+  animation: moeda-cair var(--duracao) var(--atraso) ease-in both;
+}
+
+@keyframes moeda-cair {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotateY(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(calc(100dvh + 60px)) rotateY(900deg);
+  }
+}
+
+/* Tudo certo */
+
+.monstro-perfeito .monstro-corpo {
+  animation: pular 0.6s 0.15s ease-in-out 4;
+}
+
+@keyframes pular {
+  0%,
+  100% {
+    transform: none;
+  }
+  20% {
+    transform: scale(1.08, 0.9);
+  }
+  50% {
+    transform: translateY(-70px) scale(0.95, 1.06) rotate(-6deg);
+  }
+  80% {
+    transform: scale(1.06, 0.93);
+  }
+}
+
+/* Mania não atendida e pedido errado */
+
+.monstro-maniaNaoAtendida .monstro-corpo,
+.monstro-pedidoErrado .monstro-corpo {
+  animation: emburrar 0.5s ease-in-out 2;
+}
+
+@keyframes emburrar {
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+.cara-feia {
+  position: absolute;
+  left: calc(var(--tamanho-monstro) * 0.2);
+  bottom: calc(var(--tamanho-monstro) * 0.42);
+  z-index: 2;
+  font-size: calc(var(--tamanho-monstro) * 0.38);
+  line-height: 1;
+  animation: surgir 0.4s 0.2s cubic-bezier(0.3, 1.8, 0.5, 1) both;
+}
+
+.nuvem-reclamacao {
+  position: absolute;
+  left: calc(var(--tamanho-monstro) * -0.62);
+  bottom: calc(var(--tamanho-monstro) * 0.8);
+  z-index: 2;
+  padding: 8px 18px;
+  font-weight: 700;
+  color: var(--texto);
+  background: #6a5a80;
+  border-radius: 999px;
+  box-shadow:
+    -14px 8px 0 -3px #6a5a80,
+    14px 7px 0 -2px #6a5a80,
+    0 -8px 0 -2px #6a5a80;
+  animation:
+    surgir 0.4s 0.4s ease-out both,
+    flutuar 1.6s 0.8s ease-in-out infinite;
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes flutuar {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Desastre de cada monstro */
+
+.fumaca,
+.morcego,
+.uivo,
+.braco {
+  position: absolute;
+  z-index: 2;
+  line-height: 1;
+}
+
+.monstro-dracula.monstro-desastre {
+  /* O morcego voa na frente do balão. */
+  z-index: 3;
+}
+
+.monstro-dracula.monstro-desastre .monstro-corpo {
+  animation: sumir-na-fumaca 0.55s ease-in both;
+}
+
+@keyframes sumir-na-fumaca {
+  to {
+    opacity: 0;
+    transform: scale(0.15) rotate(40deg);
+  }
+}
+
+.fumaca {
+  left: calc(var(--tamanho-monstro) * -0.5);
+  bottom: calc(var(--tamanho-monstro) * 0.15);
+  font-size: calc(var(--tamanho-monstro) * 0.8);
+  opacity: 0;
+  animation: fumaca 1s 0.3s ease-out both;
+}
+
+@keyframes fumaca {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5) translateY(-40px);
+  }
+}
+
+.morcego {
+  left: calc(var(--tamanho-monstro) * -0.25);
+  bottom: calc(var(--tamanho-monstro) * 0.3);
+  font-size: calc(var(--tamanho-monstro) * 0.5);
+  opacity: 0;
+  animation: morcego-voar 2.4s 0.45s ease-in-out both;
+}
+
+@keyframes morcego-voar {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.4);
+  }
+  15% {
+    transform: translate(40px, -40px) scale(1, 0.6);
+  }
+  30% {
+    transform: translate(120px, 0) scale(1, 1.1);
+  }
+  45% {
+    transform: translate(220px, -90px) scale(1, 0.6);
+  }
+  60% {
+    transform: translate(360px, -30px) scale(1, 1.1);
+  }
+  75% {
+    opacity: 1;
+    transform: translate(520px, -150px) scale(0.9, 0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(900px, -420px) scale(0.6, 1);
+  }
+}
+
+.monstro-lobisomem.monstro-desastre .monstro-corpo {
+  animation: uivar 1.4s ease-in-out both;
+}
+
+@keyframes uivar {
+  0% {
+    transform: none;
+  }
+  25%,
+  65% {
+    transform: scale(0.95, 1.14) rotate(-10deg);
+  }
+  35%,
+  55% {
+    transform: scale(0.95, 1.14) rotate(-6deg);
+  }
+  100% {
+    transform: rotate(14deg) translateY(8%);
+  }
+}
+
+.uivo {
+  left: calc(var(--tamanho-monstro) * 0.08);
+  bottom: calc(var(--tamanho-monstro) * 0.74);
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2rem, 6vh, 3.4rem);
+  color: var(--abobora);
+  text-shadow: 3px 3px 0 #000;
+  animation: uivo 1.4s 0.2s ease-out both;
+}
+
+@keyframes uivo {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-15deg);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.2) rotate(-8deg);
+  }
+  100% {
+    transform: scale(1) rotate(-8deg);
+  }
+}
+
+.rachadura {
+  position: absolute;
+  top: 0;
+  left: 8%;
+  width: min(460px, 70%);
+  height: 100%;
+}
+
+.rachadura path {
+  fill: none;
+  stroke: #0a0414;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  animation: desenhar 0.5s 0.35s ease-out both;
+}
+
+@keyframes desenhar {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.monstro-mumia.monstro-desastre .monstro-corpo {
+  animation: desenrolar 1.6s ease-in both;
+}
+
+@keyframes desenrolar {
+  0% {
+    transform: none;
+  }
+  70% {
+    transform: rotateY(1080deg) scale(0.85);
+  }
+  100% {
+    transform: rotateY(1440deg) scale(0.6, 0.35);
+  }
+}
+
+.faixas {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--tamanho-monstro) * -0.14);
+  z-index: 2;
+  width: calc(var(--tamanho-monstro) * 1.4);
+  height: calc(var(--tamanho-monstro) * 1.1);
+  transform: translateX(-50%);
+}
+
+.faixas path {
+  fill: none;
+  stroke: #e8dfc8;
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  animation: desenhar 1.3s 0.2s ease-in-out both;
+}
+
+.monstro-zumbi.monstro-desastre .monstro-corpo {
+  animation: cambalear 1.2s ease-in-out both;
+}
+
+@keyframes cambalear {
+  30% {
+    transform: rotate(-12deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(16deg) translateY(4%);
+  }
+}
+
+.braco {
+  left: calc(var(--tamanho-monstro) * 0.28);
+  bottom: calc(var(--tamanho-monstro) * 0.22);
+  font-size: calc(var(--tamanho-monstro) * 0.32);
+  filter: hue-rotate(70deg) saturate(0.75);
+  animation: braco-cair 1.3s 0.35s cubic-bezier(0.4, 0, 0.7, 1) both;
+}
+
+@keyframes braco-cair {
+  0% {
+    transform: none;
+  }
+  35% {
+    transform: translate(70px, -70px) rotate(150deg);
+  }
+  100% {
+    transform: translate(120px, calc(var(--tamanho-monstro) * 0.2)) rotate(400deg);
+  }
+}
+
+.monstro-fantasma.monstro-desastre {
+  /* Fica atrás da parede enquanto a atravessa. */
+  z-index: 1;
+}
+
+.monstro-fantasma.monstro-desastre .monstro-corpo {
+  animation: atravessar-parede 1.9s 0.3s ease-in both;
+}
+
+@keyframes atravessar-parede {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  20% {
+    opacity: 0.9;
+    transform: translateX(40px) scale(1.06) rotate(6deg);
+  }
+  100% {
+    opacity: 0.4;
+    transform: translateX(-100vw) scale(0.9, 1.05) rotate(-10deg);
+  }
+}
+
+/* Nova anotação */
+
+.canto-da-cena {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  justify-self: center;
+}
+
+.nova-anotacao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-align: center;
+  color: var(--limao);
+}
+
+.livrinho {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 130px;
+  height: 90px;
+  perspective: 500px;
+  filter: drop-shadow(0 0 16px rgba(156, 255, 87, 0.85));
+}
+
+.livrinho-pagina {
+  width: 60px;
+  height: 88px;
+  background: repeating-linear-gradient(#e8d5a3 0 9px, #bfa672 9px 10px);
+  border: 4px solid #6b3a12;
+}
+
+.livrinho-esquerda {
+  order: -1;
+  border-radius: 8px 0 0 8px;
+  transform-origin: right center;
+  animation: abrir-livro 0.9s 0.3s ease-out both;
+}
+
+.livrinho-direita {
+  border-radius: 0 8px 8px 0;
+}
+
+@keyframes abrir-livro {
+  from {
+    transform: rotateY(-178deg);
+  }
+}
+
+.brilho {
+  position: absolute;
+  top: 34%;
+  left: 42%;
+  font-size: 1.5rem;
+  opacity: 0;
+  animation: brilhar 1.1s var(--atraso) ease-out 2 both;
+}
+
+@keyframes brilhar {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 0.6), calc(var(--dy) * 0.6)) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.4);
+  }
+}
+
+/* Telas centralizadas: login, fim de dia e avisos */
+
 .tela {
+  width: 100%;
   max-width: 760px;
   margin: 0 auto;
   padding: 20px;
@@ -48,159 +1029,40 @@ button:focus-visible {
   gap: 16px;
 }
 
-.placar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 16px;
-  background: var(--painel);
-  border: 1px solid var(--borda);
-  border-radius: 12px;
-}
-
-.balcao {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.retrato {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.retrato-emoji {
-  font-size: 96px;
-  line-height: 1.1;
-}
-
-.retrato-svg {
-  width: 110px;
-  height: 110px;
-}
-
-.nome-monstro {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.comanda {
-  padding: 12px 18px;
-  color: #2b1c3a;
-  background: #fbf3d9;
-  border-radius: 4px;
-  transform: rotate(-1deg);
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
-}
-
-.comanda h2 {
-  margin: 0 0 8px;
-  font-size: 1.1rem;
-  border-bottom: 2px dashed #b3a688;
-}
-
-.comanda ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  line-height: 1.8;
-}
-
-.escolha-da-casa {
-  font-weight: bold;
-}
-
-.lanche {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.espaco {
-  min-height: 92px;
-  border-radius: 12px;
-}
-
-.espaco.vazio {
-  border: 2px dashed var(--borda);
-}
-
-.espaco.ocupado {
-  background: #4a2f63;
-  border: 2px solid var(--destaque);
-}
-
-.estacao {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.ingrediente {
-  padding: 10px 4px;
-  background: var(--painel);
-  border: 1px solid var(--borda);
-  border-radius: 12px;
-}
-
-.ingrediente:hover:enabled {
-  background: #3d2953;
-}
-
-.emoji {
-  display: block;
-  font-size: 2rem;
-}
-
-.botao-principal {
-  align-self: center;
-  min-width: 200px;
-  padding: 12px 28px;
-  font-size: 1.15rem;
-  font-weight: bold;
-  color: #1a1024;
-  background: var(--destaque);
-  border: none;
-  border-radius: 999px;
-}
-
-.botao-secundario {
-  padding: 8px 16px;
-  font-weight: bold;
-  background: #4a2f63;
-  border: 1px solid var(--destaque);
-  border-radius: 999px;
-}
-
 .titulo {
   margin: 8px 0 0;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: 2px;
   text-align: center;
-  color: var(--destaque);
+  color: var(--limao);
+  text-shadow: 0 0 18px rgba(156, 255, 87, 0.45);
 }
 
 .painel {
-  padding: 16px 20px;
+  padding: 18px 22px;
   background: var(--painel);
-  border: 1px solid var(--borda);
-  border-radius: 12px;
+  border: 2px solid var(--borda);
+  border-radius: 20px;
 }
 
 .painel h2 {
   margin: 0 0 12px;
-  font-size: 1.1rem;
+  font-family: var(--fonte-titulo);
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--abobora);
 }
 
 .contas {
   display: grid;
   grid-template-columns: 1fr auto;
+  align-items: baseline;
   gap: 6px 0;
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 .contas dd {
@@ -209,11 +1071,28 @@ button:focus-visible {
 }
 
 .contas .total {
-  padding-top: 8px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: var(--destaque);
-  border-top: 1px solid var(--borda);
+  padding-top: 10px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--abobora);
+  border-top: 2px dashed var(--borda);
+}
+
+.contas .total {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.contas dd.total {
+  justify-content: flex-end;
+  font-family: var(--fonte-titulo);
+  font-size: 3.2rem;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  color: var(--limao);
+  text-shadow: 0 0 14px rgba(156, 255, 87, 0.5);
 }
 
 .item-loja {
@@ -236,8 +1115,8 @@ button:focus-visible {
 }
 
 .comprado {
-  font-weight: bold;
-  color: var(--verde);
+  font-weight: 700;
+  color: var(--limao);
 }
 
 .acoes {
@@ -245,61 +1124,7 @@ button:focus-visible {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-}
-
-.livro-fundo {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  background: rgba(10, 5, 15, 0.75);
-}
-
-.livro {
-  width: min(720px, 100%);
-  max-height: 100%;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
   gap: 14px;
-  padding: 20px;
-  color: #2b1c3a;
-  background: #fbf3d9;
-  border-radius: 10px;
-}
-
-.livro h2 {
-  margin: 0;
-  text-align: center;
-}
-
-.livro-paginas {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.livro-pagina {
-  padding: 10px 14px;
-  border: 1px solid #b3a688;
-  border-radius: 6px;
-}
-
-.livro-pagina p {
-  margin: 8px 0 0;
-}
-
-.retrato-pequeno .retrato-emoji {
-  font-size: 48px;
-}
-
-.retrato-pequeno .retrato-svg {
-  width: 56px;
-  height: 56px;
 }
 
 .aviso {
@@ -308,33 +1133,19 @@ button:focus-visible {
   font-size: 1.2rem;
 }
 
-.conta {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 10px 20px 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  color: var(--suave);
-}
-
-.botao-link {
-  padding: 0;
-  color: var(--destaque);
-  text-decoration: underline;
-  background: none;
-  border: none;
-}
-
 .tela-login {
   max-width: 420px;
   padding-top: 60px;
 }
 
+.tela-login .titulo {
+  font-size: 2.2rem;
+}
+
 .formulario {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 14px;
 }
 
@@ -345,103 +1156,165 @@ button:focus-visible {
 }
 
 .formulario input {
-  padding: 10px 12px;
+  padding: 10px 14px;
   font: inherit;
   color: var(--texto);
   background: var(--fundo);
-  border: 1px solid var(--borda);
-  border-radius: 8px;
+  border: 2px solid var(--borda);
+  border-radius: 12px;
 }
 
 .erro {
   margin: 0;
-  font-weight: bold;
+  font-weight: 700;
   color: var(--vermelho);
 }
 
 .erro-save {
+  padding: 8px 20px;
   text-align: center;
-  padding: 8px 20px 0;
 }
 
-.reacao {
+/* Livro de Manias: papel envelhecido e letra manuscrita */
+
+.livro-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(8, 3, 16, 0.8);
+}
+
+.livro {
+  width: min(860px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  padding: 24px;
-  text-align: center;
-  background: var(--painel);
-  border: 2px solid var(--borda);
-  border-radius: 16px;
+  padding: 18px 26px;
+  font-family: var(--fonte-manuscrita);
+  font-size: 1.4rem;
+  line-height: 1.1;
+  color: var(--tinta);
+  background:
+    radial-gradient(circle at 8% 12%, rgba(120, 78, 28, 0.35), transparent 22%),
+    radial-gradient(circle at 92% 86%, rgba(120, 78, 28, 0.38), transparent 26%),
+    radial-gradient(circle at 78% 10%, rgba(120, 78, 28, 0.18), transparent 14%),
+    linear-gradient(90deg, #cdb37a, var(--papel) 8%, var(--papel) 92%, #cdb37a);
+  border: 3px solid #6b3a12;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 8px #4a2a10,
+    0 18px 50px #000;
+  animation: livro-abrir 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
 }
 
-.fala {
-  margin: 0;
-  font-size: 1.35rem;
+@keyframes livro-abrir {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateX(-50deg) scale(0.8);
+  }
 }
 
-.valores {
+.livro h2 {
   margin: 0;
-  color: var(--suave);
+  font-family: var(--fonte-titulo);
+  font-size: 2.3rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #6b1d0c;
+}
+
+.livro-paginas {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 28px;
+}
+
+.livro-pagina {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 12px;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(44, 28, 16, 0.5);
+}
+
+.livro-pagina .retrato {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 84px;
+  --tamanho-monstro: 48px;
+}
+
+.livro-pagina .nome-monstro {
   font-size: 1.1rem;
+  color: #6b1d0c;
+  text-shadow: none;
 }
 
-.nova-anotacao {
+.livro-pagina p {
   margin: 0;
-  font-weight: bold;
-  color: var(--destaque);
 }
 
-.reacao-perfeito {
-  border-color: var(--verde);
+.livro .botao-principal {
+  font-family: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
 }
 
-.reacao-desastre {
-  border-color: var(--vermelho);
-  background: #4a1f2c;
-  animation: tremer 0.5s ease-in-out;
+.mancha {
+  display: inline-block;
+  margin-left: 2px;
+  padding: 0 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--papel);
+  background: #15102c;
+  border-radius: 58% 42% 63% 37% / 48% 62% 38% 52%;
+  box-shadow:
+    13px -7px 0 -5px #15102c,
+    -11px 6px 0 -6px #15102c,
+    20px 6px 0 -7px #15102c;
+  transform: rotate(-3deg);
 }
 
-.reacao-desastre .retrato > :first-child {
-  animation: explodir 0.8s ease-out both;
-}
+/* Telas estreitas */
 
-@keyframes tremer {
-  20%,
-  60% {
-    transform: translateX(-10px);
+@media (max-width: 860px) {
+  .cena {
+    --tamanho-monstro: 100px;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    padding-inline: 66px 14px;
   }
-  40%,
-  80% {
-    transform: translateX(10px);
-  }
-}
 
-@keyframes explodir {
-  0% {
-    transform: scale(1);
+  .balao {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    margin-bottom: 0;
   }
-  40% {
-    transform: scale(1.5) rotate(10deg);
-    filter: hue-rotate(90deg);
+
+  .balao::before,
+  .balao::after {
+    display: none;
   }
-  100% {
-    transform: scale(0.8) rotate(-12deg);
-    filter: grayscale(0.8);
+
+  .livro-paginas {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reacao-desastre,
-  .reacao-desastre .retrato > :first-child {
-    animation: none;
-  }
-}
-
-@media (max-width: 520px) {
-  .balcao,
-  .livro-paginas {
-    grid-template-columns: 1fr;
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }

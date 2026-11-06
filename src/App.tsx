@@ -53,6 +53,7 @@ export function App() {
   return (
     <>
       <div className="conta">
+        <span className="letreiro">Monster Munchies</span>
         <span>{estado.nome}</span>
         <button className="botao-link" onClick={aoSair}>
           Sair

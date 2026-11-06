@@ -21,7 +21,7 @@ export function LivroDeManias({ livro, aoFechar }: { livro: Livro; aoFechar: () 
         aria-label="Livro de Manias"
         onClick={(evento) => evento.stopPropagation()}
       >
-        <h2>📖 Livro de Manias</h2>
+        <h2>Livro de Manias</h2>
         <div className="livro-paginas">
           {IDS_MONSTROS.map((id) => (
             <article key={id} className="livro-pagina">
@@ -30,10 +30,12 @@ export function LivroDeManias({ livro, aoFechar }: { livro: Livro; aoFechar: () 
                 <span className="nome-monstro">{MONSTROS[id].nome}</span>
               </div>
               <p>
-                <strong>Regra:</strong> {livro[id].regra ? MONSTROS[id].anotacaoRegra : "???"}
+                <strong>Regra:</strong>{" "}
+                {livro[id].regra ? MONSTROS[id].anotacaoRegra : <span className="mancha">???</span>}
               </p>
               <p>
-                <strong>Mania:</strong> {livro[id].mania ? MONSTROS[id].anotacaoMania : "???"}
+                <strong>Mania:</strong>{" "}
+                {livro[id].mania ? MONSTROS[id].anotacaoMania : <span className="mancha">???</span>}
               </p>
             </article>
           ))}

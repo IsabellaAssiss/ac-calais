@@ -8,7 +8,7 @@ import {
   type Cliente,
   type Noite,
 } from "../game/jogo.ts";
-import { RetratoMonstro } from "./RetratoMonstro.tsx";
+import { EfeitosDaTela, Monstro, NovaAnotacao, Rachadura } from "./Efeitos.tsx";
 
 type Props = {
   noite: Noite;
@@ -23,15 +23,16 @@ export function TelaNoite({ noite, aoServir, aoSeguir, aoAbrirLivro }: Props) {
   const atendimento = noite.atendimentos.at(-1);
   const total = noite.clientes.length;
   const posicao = reacaoVisivel ? noite.atendimentos.length : noite.atendimentos.length + 1;
+  const tremendo = reacaoVisivel && atendimento?.resultado === "desastre";
 
   return (
-    <main className="tela">
+    <main className={tremendo ? "tela-noite tremendo" : "tela-noite"}>
       <header className="placar">
-        <strong>Noite {noite.numero}</strong>
+        <strong className="placar-noite">Noite {noite.numero}</strong>
         <span>
           Cliente {posicao} de {total}
         </span>
-        <span>Ganhos: ${pagamentos + gorjetas}</span>
+        <span className="placar-ganhos">🪙 ${pagamentos + gorjetas}</span>
         <button className="botao-secundario" onClick={aoAbrirLivro}>
           📖 Livro
         </button>
@@ -71,12 +72,10 @@ function Montagem({
 
   return (
     <>
-      <section className="balcao">
-        <div className="retrato">
-          <RetratoMonstro monstro={cliente.monstro} />
-          <span className="nome-monstro">{MONSTROS[cliente.monstro].nome}</span>
-        </div>
-        <div className="comanda">
+      <section className="cena">
+        <Monstro monstro={cliente.monstro} nome={MONSTROS[cliente.monstro].nome} />
+
+        <div className="balao comanda">
           <h2>Comanda</h2>
           <ul>
             {cliente.comanda.itensFixos.map((item) => (
@@ -87,44 +86,50 @@ function Montagem({
             <li className="escolha-da-casa">✨ 2 à escolha da casa</li>
           </ul>
         </div>
+
+        <section className="pilha" aria-label="Lanche">
+          <p className="pilha-dica">
+            {lanche.length === 0 ? "Monte o lanche" : "Clique numa camada para tirar"}
+          </p>
+          <div className="pilha-camadas">
+            {Array.from({ length: TAMANHO_DO_LANCHE }, (_, i) => {
+              const ingrediente = lanche[i];
+              return ingrediente ? (
+                <button
+                  key={i}
+                  className={`camada camada-${ingrediente}`}
+                  title={`Remover ${INGREDIENTES[ingrediente].nome}`}
+                  onClick={() => setLanche(lanche.filter((_, p) => p !== i))}
+                >
+                  {INGREDIENTES[ingrediente].emoji} {INGREDIENTES[ingrediente].nome}
+                </button>
+              ) : (
+                <div key={i} className="camada camada-vazia" />
+              );
+            })}
+          </div>
+          <div className="prato" />
+        </section>
       </section>
 
-      <section className="lanche" aria-label="Lanche">
-        {Array.from({ length: TAMANHO_DO_LANCHE }, (_, i) => {
-          const ingrediente = lanche[i];
-          return ingrediente ? (
+      <section className="balcao">
+        <div className="estacao" aria-label="Ingredientes">
+          {IDS_INGREDIENTES.map((id) => (
             <button
-              key={i}
-              className="espaco ocupado"
-              title={`Remover ${INGREDIENTES[ingrediente].nome}`}
-              onClick={() => setLanche(lanche.filter((_, p) => p !== i))}
+              key={id}
+              className="ingrediente"
+              disabled={cheio}
+              onClick={() => setLanche([...lanche, id])}
             >
-              <span className="emoji">{INGREDIENTES[ingrediente].emoji}</span>
-              {INGREDIENTES[ingrediente].nome}
+              <span className="emoji">{INGREDIENTES[id].emoji}</span>
+              {INGREDIENTES[id].nome}
             </button>
-          ) : (
-            <div key={i} className="espaco vazio" />
-          );
-        })}
+          ))}
+        </div>
+        <button className="botao-principal" disabled={!cheio} onClick={() => aoServir(lanche)}>
+          Servir
+        </button>
       </section>
-
-      <section className="estacao" aria-label="Ingredientes">
-        {IDS_INGREDIENTES.map((id) => (
-          <button
-            key={id}
-            className="ingrediente"
-            disabled={cheio}
-            onClick={() => setLanche([...lanche, id])}
-          >
-            <span className="emoji">{INGREDIENTES[id].emoji}</span>
-            {INGREDIENTES[id].nome}
-          </button>
-        ))}
-      </section>
-
-      <button className="botao-principal" disabled={!cheio} onClick={() => aoServir(lanche)}>
-        Servir
-      </button>
     </>
   );
 }
@@ -146,20 +151,27 @@ function Reacao({
   }[resultado];
 
   return (
-    <section className={`reacao reacao-${resultado}`}>
-      <div className="retrato">
-        <RetratoMonstro monstro={cliente.monstro} />
-        <span className="nome-monstro">{monstro.nome}</span>
-      </div>
-      <p className="fala">{fala}</p>
-      <p className="valores">
-        {pagamento === 0 ? "Não pagou nada!" : `Pagou $${pagamento}`}
-        {gorjeta > 0 && ` + $${gorjeta} de gorjeta`}
-      </p>
-      {novaAnotacao && <p className="nova-anotacao">📖 Nova anotação no Livro!</p>}
-      <button className="botao-principal" onClick={aoContinuar}>
-        Continuar
-      </button>
-    </section>
+    <>
+      <section className="cena">
+        <Monstro monstro={cliente.monstro} nome={monstro.nome} resultado={resultado} />
+        <div className={`balao balao-${resultado}`}>
+          <p className="fala">{fala}</p>
+        </div>
+        <div className="canto-da-cena">{novaAnotacao && <NovaAnotacao />}</div>
+      </section>
+
+      <section className="balcao balcao-reacao">
+        {resultado === "desastre" && cliente.monstro === "lobisomem" && <Rachadura />}
+        <p className="valores">
+          {pagamento === 0 ? "Não pagou nada!" : `Pagou $${pagamento}`}
+          {gorjeta > 0 && ` + $${gorjeta} de gorjeta`}
+        </p>
+        <button className="botao-principal" onClick={aoContinuar}>
+          Continuar
+        </button>
+      </section>
+
+      <EfeitosDaTela resultado={resultado} />
+    </>
   );
 }

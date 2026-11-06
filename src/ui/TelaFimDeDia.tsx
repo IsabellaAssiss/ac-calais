@@ -5,6 +5,7 @@ import {
   type Noite,
   type Progresso,
 } from "../game/jogo.ts";
+import { useContagem } from "./Efeitos.tsx";
 
 type Props = {
   noite: Noite;
@@ -22,6 +23,7 @@ export function TelaFimDeDia({
   aoProximaNoite,
 }: Props) {
   const { pagamentos, gorjetas } = ganhosDaNoite(noite);
+  const dinheiroContado = useContagem(progresso.dinheiro);
 
   return (
     <main className="tela">
@@ -34,7 +36,7 @@ export function TelaFimDeDia({
           <dt>Gorjetas</dt>
           <dd>${gorjetas}</dd>
           <dt className="total">Dinheiro no caixa</dt>
-          <dd className="total">${progresso.dinheiro}</dd>
+          <dd className="total">${dinheiroContado}</dd>
         </dl>
       </section>
 
