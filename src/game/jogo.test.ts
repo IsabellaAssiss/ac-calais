@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Ingrediente, MonstroId } from "./conteudo.ts";
+import { INGREDIENTES, type Ingrediente, type MonstroId } from "./conteudo.ts";
 import {
   avaliarLanche,
   comprarPote,
@@ -149,12 +149,71 @@ describe("sortearClientes", () => {
   });
 });
 
+describe("Fantasma", () => {
+  it("começa com a página em branco no Livro de Manias", () => {
+    expect(progressoInicial().livro.fantasma).toEqual({ regra: false, mania: false });
+  });
+
+  it("entra no sorteio dos clientes, e todos os monstros aparecem", () => {
+    const sorteados = new Set(
+      Array.from({ length: 200 }, (_, semente) => sortearClientes(rngSequencial(semente)))
+        .flat()
+        .map((c) => c.monstro),
+    );
+    expect(sorteados).toEqual(new Set(["dracula", "lobisomem", "mumia", "zumbi", "fantasma"]));
+  });
+
+  it("Sal de prata causa desastre: ele atravessa a parede sem pagar", () => {
+    const noite = servir(noiteCom([cliente("fantasma")]), ["pao", "carne", "salDePrata", "queijo"]);
+    expect(noite.atendimentos[0]).toMatchObject({ resultado: "desastre", pagamento: 0, gorjeta: 0 });
+    expect(noite.livro.fantasma).toEqual({ regra: true, mania: false });
+  });
+
+  it("Sorvete de neblina nas escolhas da casa vale a gorjeta", () => {
+    const noite = servir(noiteCom([cliente("fantasma")]), [
+      "pao",
+      "carne",
+      "sorveteDeNeblina",
+      "queijo",
+    ]);
+    expect(noite.atendimentos[0]).toMatchObject({ resultado: "perfeito", pagamento: 10, gorjeta: 5 });
+  });
+
+  it("sem Sorvete de neblina paga, sem gorjeta, e anota a mania", () => {
+    const noite = servir(noiteCom([cliente("fantasma")]), ["pao", "carne", "queijo", "picles"]);
+    expect(noite.atendimentos[0]).toMatchObject({
+      resultado: "maniaNaoAtendida",
+      pagamento: 10,
+      gorjeta: 0,
+    });
+    expect(noite.livro.fantasma).toEqual({ regra: false, mania: true });
+  });
+});
+
+describe("invariante dos itens fixos", () => {
+  const monstros: MonstroId[] = ["dracula", "lobisomem", "mumia", "zumbi", "fantasma"];
+  const ingredientes = Object.keys(INGREDIENTES) as Ingrediente[];
+  const casos = monstros.flatMap((monstro) =>
+    (["carne", "queijo"] as Ingrediente[]).map((fixo) => [monstro, fixo] as const),
+  );
+
+  it.each(casos)("%s com Pão + %s pode ser totalmente atendido", (monstro, fixo) => {
+    const perfeitos = ingredientes.flatMap((a) =>
+      ingredientes.filter(
+        (b) => avaliarLanche(cliente(monstro, fixo), ["pao", fixo, a, b]) === "perfeito",
+      ),
+    );
+    expect(perfeitos.length).toBeGreaterThan(0);
+  });
+});
+
 describe("progresso entre noites", () => {
   const escolhasPerfeitas: Record<MonstroId, Ingrediente[]> = {
     dracula: ["molho", "queijo"],
     lobisomem: ["carne", "queijo"],
     mumia: ["picles", "queijo"],
     zumbi: ["cerebro", "cerebro"],
+    fantasma: ["sorveteDeNeblina", "queijo"],
   };
 
   function jogarNoitePerfeita(noite: Noite): Noite {

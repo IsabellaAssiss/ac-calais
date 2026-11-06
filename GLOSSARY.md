@@ -9,7 +9,7 @@ Uma rodada de jogo, com 5 clientes atendidos em sequência e encerrada pela tela
 _Avoid_: Fase, nível
 
 **Cliente**:
-Uma das 5 visitas de uma noite, formada por um monstro e sua comanda. Os 4 monstros aparecem em toda noite, e um deles volta como quinto cliente, nunca em sequência.
+Uma das 5 visitas de uma noite, formada por um monstro e sua comanda. Cada noite sorteia 4 dos 5 monstros, e um deles volta como quinto cliente, nunca em sequência.
 _Avoid_: Freguês
 
 **Atendimento**:
@@ -33,11 +33,11 @@ O desbloqueio da loja, de compra única, que dobra a gorjeta nas noites seguinte
 _Avoid_: Upgrade, power-up
 
 **Monstro**:
-Um dos quatro tipos de cliente: Drácula, Lobisomem, Múmia ou Zumbi.
+Um dos cinco tipos de cliente: Drácula, Lobisomem, Múmia, Zumbi ou Fantasma.
 _Avoid_: Vampiro, personagem
 
 **Ingrediente**:
-Um dos 8 componentes disponíveis na estação de montagem: Pão, Carne, Queijo, Picles, Molho vermelho, Alho, Sal de prata e Cérebro.
+Um dos 9 componentes disponíveis na estação de montagem: Pão, Carne, Queijo, Picles, Molho vermelho, Alho, Sal de prata, Cérebro e Sorvete de neblina.
 _Avoid_: Item, componente
 
 **Lanche**:

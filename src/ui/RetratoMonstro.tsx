@@ -4,6 +4,7 @@ const EMOJIS: Record<Exclude<MonstroId, "mumia">, string> = {
   dracula: "🧛",
   lobisomem: "🐺",
   zumbi: "🧟",
+  fantasma: "👻",
 };
 
 /** Não existe emoji de múmia, então ela é desenhada em SVG. */

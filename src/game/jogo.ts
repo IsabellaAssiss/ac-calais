@@ -1,6 +1,7 @@
 import { IDS_MONSTROS, MONSTROS, type Ingrediente, type MonstroId } from "./conteudo.ts";
 
 export const TAMANHO_DO_LANCHE = 4;
+const MONSTROS_POR_NOITE = 4;
 export const PAGAMENTO = 10;
 export const GORJETA = 5;
 export const PRECO_POTE_DE_GORJETAS = 30;
@@ -77,9 +78,9 @@ function embaralhar<T>(itens: T[], rng: Rng): T[] {
   return copia;
 }
 
-/** Os 4 monstros mais 1 repetido, que nunca vem logo ao lado de si mesmo. */
+/** 4 monstros sorteados mais 1 repetido, que nunca vem logo ao lado de si mesmo. */
 export function sortearClientes(rng: Rng): Cliente[] {
-  const ordem = embaralhar(IDS_MONSTROS, rng);
+  const ordem = embaralhar(IDS_MONSTROS, rng).slice(0, MONSTROS_POR_NOITE);
   const repetido = ordem[sortearIndice(ordem.length, rng)];
   const posicoesValidas = [0, 1, 2, 3, 4].filter(
     (p) => ordem[p - 1] !== repetido && ordem[p] !== repetido,

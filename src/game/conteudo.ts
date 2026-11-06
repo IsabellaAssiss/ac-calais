@@ -6,9 +6,10 @@ export type Ingrediente =
   | "molho"
   | "alho"
   | "salDePrata"
-  | "cerebro";
+  | "cerebro"
+  | "sorveteDeNeblina";
 
-export type MonstroId = "dracula" | "lobisomem" | "mumia" | "zumbi";
+export type MonstroId = "dracula" | "lobisomem" | "mumia" | "zumbi" | "fantasma";
 
 export const INGREDIENTES: Record<Ingrediente, { nome: string; emoji: string }> = {
   pao: { nome: "Pão", emoji: "🍞" },
@@ -19,6 +20,7 @@ export const INGREDIENTES: Record<Ingrediente, { nome: string; emoji: string }> 
   alho: { nome: "Alho", emoji: "🧄" },
   salDePrata: { nome: "Sal de prata", emoji: "🧂" },
   cerebro: { nome: "Cérebro", emoji: "🧠" },
+  sorveteDeNeblina: { nome: "Sorvete de neblina", emoji: "🍨" },
 };
 
 type Monstro = {
@@ -74,6 +76,16 @@ export const MONSTROS: Record<MonstroId, Monstro> = {
     falaDesastre: "SEM CÉÉÉREBRO?! O Zumbi passa mal e cai aos pedaços!",
     falaMania: "Céééérebro... mais... céééérebro...",
     falaPerfeito: "CÉÉÉREBRO! CÉÉÉREBRO EM DOBRO!",
+  },
+  fantasma: {
+    nome: "Fantasma",
+    quebraRegraObvia: (lanche) => lanche.includes("salDePrata"),
+    atendeMania: (escolhas) => escolhas.includes("sorveteDeNeblina"),
+    anotacaoRegra: "Nunca sirva Sal de prata. Sal espanta fantasma.",
+    anotacaoMania: "Quer Sorvete de neblina nas escolhas da casa. Gelado, como ele.",
+    falaDesastre: "SAL! O Fantasma atravessa a parede e some sem pagar!",
+    falaMania: "Uuuuh... faltou um friozinho na espinha...",
+    falaPerfeito: "Uuuuh! De arrepiar!",
   },
 };
 

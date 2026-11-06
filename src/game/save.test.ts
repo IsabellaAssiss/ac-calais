@@ -21,6 +21,19 @@ describe("lerProgresso", () => {
     expect(lido?.livro.zumbi).toEqual({ regra: false, mania: false });
   });
 
+  it("mantém o progresso de um save anterior ao Fantasma", () => {
+    const pagina = { regra: true, mania: false };
+    const lido = lerProgresso({
+      dinheiro: 45,
+      noite: 3,
+      temPoteDeGorjetas: true,
+      livro: { dracula: pagina, lobisomem: pagina, mumia: pagina, zumbi: pagina },
+    });
+    expect(lido).toMatchObject({ dinheiro: 45, noite: 3, temPoteDeGorjetas: true });
+    expect(lido?.livro.dracula).toEqual(pagina);
+    expect(lido?.livro.fantasma).toEqual({ regra: false, mania: false });
+  });
+
   it("aceita um progresso válido", () => {
     expect(lerProgresso(progressoInicial())).toEqual(progressoInicial());
   });
