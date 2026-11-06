@@ -10,7 +10,15 @@ _Avoid_: Fase, nível
 
 **Cliente**:
 Uma das 5 visitas de uma noite, formada por um monstro e sua comanda. Os 4 monstros aparecem em toda noite, e um deles volta como quinto cliente, nunca em sequência.
-_Avoid_: Freguês, atendimento
+_Avoid_: Freguês
+
+**Atendimento**:
+O desfecho de servir um lanche a um cliente: o resultado, o valor pago e a gorjeta.
+_Avoid_: Pedido, venda
+
+**Progresso**:
+O que o jogador mantém entre noites: dinheiro, desbloqueio, Livro de Manias e número da próxima noite.
+_Avoid_: Estado, perfil
 
 **Tela de fim de dia**:
 O encerramento da noite, que mostra o dinheiro ganho e dá acesso à loja.

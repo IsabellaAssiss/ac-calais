@@ -91,16 +91,16 @@ function Montagem({
 
       <section className="lanche" aria-label="Lanche">
         {Array.from({ length: TAMANHO_DO_LANCHE }, (_, i) => {
-          const item = lanche[i];
-          return item ? (
+          const ingrediente = lanche[i];
+          return ingrediente ? (
             <button
               key={i}
               className="espaco ocupado"
-              title={`Remover ${INGREDIENTES[item].nome}`}
+              title={`Remover ${INGREDIENTES[ingrediente].nome}`}
               onClick={() => setLanche(lanche.filter((_, p) => p !== i))}
             >
-              <span className="emoji">{INGREDIENTES[item].emoji}</span>
-              {INGREDIENTES[item].nome}
+              <span className="emoji">{INGREDIENTES[ingrediente].emoji}</span>
+              {INGREDIENTES[ingrediente].nome}
             </button>
           ) : (
             <div key={i} className="espaco vazio" />
