@@ -50,7 +50,7 @@ export const MONSTROS: Record<MonstroId, Monstro> = {
     quebraRegraObvia: (lanche) => lanche.includes("salDePrata"),
     atendeMania: (escolhas) => escolhas.includes("carne"),
     anotacaoRegra: "Nunca sirva Sal de prata.",
-    anotacaoMania: "Quer Carne nas escolhas da casa. Sempre em dobro.",
+    anotacaoMania: "Quer Carne nas escolhas da casa. Carnívoro até no acompanhamento.",
     falaDesastre: "PRATA! O Lobisomem uiva, passa mal e derruba o balcão!",
     falaMania: "Grrr... cadê a carne de verdade?",
     falaPerfeito: "AUUUU! Esse lanche tem dentes!",

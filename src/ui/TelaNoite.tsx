@@ -14,9 +14,10 @@ type Props = {
   noite: Noite;
   aoServir: (lanche: Ingrediente[]) => void;
   aoSeguir: () => void;
+  aoAbrirLivro: () => void;
 };
 
-export function TelaNoite({ noite, aoServir, aoSeguir }: Props) {
+export function TelaNoite({ noite, aoServir, aoSeguir, aoAbrirLivro }: Props) {
   const [reacaoVisivel, setReacaoVisivel] = useState(false);
   const { pagamentos, gorjetas } = ganhosDaNoite(noite);
   const atendimento = noite.atendimentos.at(-1);
@@ -31,6 +32,9 @@ export function TelaNoite({ noite, aoServir, aoSeguir }: Props) {
           Cliente {posicao} de {total}
         </span>
         <span>Ganhos: ${pagamentos + gorjetas}</span>
+        <button className="botao-secundario" onClick={aoAbrirLivro}>
+          📖 Livro
+        </button>
       </header>
 
       {reacaoVisivel && atendimento ? (

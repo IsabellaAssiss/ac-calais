@@ -169,6 +169,139 @@ button:focus-visible {
   border-radius: 999px;
 }
 
+.botao-secundario {
+  padding: 8px 16px;
+  font-weight: bold;
+  background: #4a2f63;
+  border: 1px solid var(--destaque);
+  border-radius: 999px;
+}
+
+.titulo {
+  margin: 8px 0 0;
+  text-align: center;
+  color: var(--destaque);
+}
+
+.painel {
+  padding: 16px 20px;
+  background: var(--painel);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+}
+
+.painel h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.contas {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 0;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.contas dd {
+  margin: 0;
+  text-align: right;
+}
+
+.contas .total {
+  padding-top: 8px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--destaque);
+  border-top: 1px solid var(--borda);
+}
+
+.item-loja {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.item-loja-texto {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  color: var(--suave);
+}
+
+.item-loja-texto strong {
+  color: var(--texto);
+}
+
+.comprado {
+  font-weight: bold;
+  color: var(--verde);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.livro-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(10, 5, 15, 0.75);
+}
+
+.livro {
+  width: min(720px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  color: #2b1c3a;
+  background: #fbf3d9;
+  border-radius: 10px;
+}
+
+.livro h2 {
+  margin: 0;
+  text-align: center;
+}
+
+.livro-paginas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.livro-pagina {
+  padding: 10px 14px;
+  border: 1px solid #b3a688;
+  border-radius: 6px;
+}
+
+.livro-pagina p {
+  margin: 8px 0 0;
+}
+
+.retrato-pequeno .retrato-emoji {
+  font-size: 48px;
+}
+
+.retrato-pequeno .retrato-svg {
+  width: 56px;
+  height: 56px;
+}
+
 .reacao {
   display: flex;
   flex-direction: column;
@@ -245,7 +378,8 @@ button:focus-visible {
 }
 
 @media (max-width: 520px) {
-  .balcao {
+  .balcao,
+  .livro-paginas {
     grid-template-columns: 1fr;
   }
 }

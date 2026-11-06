@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
+  comprarPote,
   encerrarNoite,
-  ganhosDaNoite,
   iniciarNoite,
   noiteTerminou,
   progressoInicial,
@@ -10,12 +10,15 @@ import {
   type Progresso,
 } from "./game/jogo.ts";
 import type { Ingrediente } from "./game/conteudo.ts";
+import { LivroDeManias } from "./ui/LivroDeManias.tsx";
+import { TelaFimDeDia } from "./ui/TelaFimDeDia.tsx";
 import { TelaNoite } from "./ui/TelaNoite.tsx";
 
 export function App() {
   const [progresso, setProgresso] = useState<Progresso>(progressoInicial);
   const [noite, setNoite] = useState<Noite>(() => iniciarNoite(progresso));
   const [fimDeDia, setFimDeDia] = useState(false);
+  const [livroAberto, setLivroAberto] = useState(false);
 
   function aoServir(lanche: Ingrediente[]) {
     setNoite(servir(noite, lanche));
@@ -33,18 +36,22 @@ export function App() {
     setFimDeDia(false);
   }
 
-  if (fimDeDia) {
-    const { pagamentos, gorjetas } = ganhosDaNoite(noite);
-    return (
-      <main className="tela">
-        <h1>Fim da noite {noite.numero}</h1>
-        <p>Ganhos: ${pagamentos + gorjetas}</p>
-        <button className="botao-principal" onClick={aoProximaNoite}>
-          Próxima noite
-        </button>
-      </main>
-    );
-  }
+  const abrirLivro = () => setLivroAberto(true);
 
-  return <TelaNoite noite={noite} aoServir={aoServir} aoSeguir={aoSeguir} />;
+  return (
+    <>
+      {fimDeDia ? (
+        <TelaFimDeDia
+          noite={noite}
+          progresso={progresso}
+          aoComprarPote={() => setProgresso(comprarPote(progresso))}
+          aoAbrirLivro={abrirLivro}
+          aoProximaNoite={aoProximaNoite}
+        />
+      ) : (
+        <TelaNoite noite={noite} aoServir={aoServir} aoSeguir={aoSeguir} aoAbrirLivro={abrirLivro} />
+      )}
+      {livroAberto && <LivroDeManias livro={noite.livro} aoFechar={() => setLivroAberto(false)} />}
+    </>
+  );
 }
