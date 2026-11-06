@@ -103,6 +103,17 @@ describe("save", () => {
     expect((await pedir("PUT", "/api/save", { dinheiro: -5 })).status).toBe(400);
   });
 
+  it("recusa save com o Livro vazio e não apaga o que estava guardado", async () => {
+    const pedir = navegador();
+    await pedir("POST", "/api/cadastro", { nome: "Iara", senha: "segredo1" });
+    await pedir("PUT", "/api/save", progresso);
+
+    const resposta = await pedir("PUT", "/api/save", { ...progresso, livro: {} });
+
+    expect(resposta.status).toBe(400);
+    expect(await (await pedir("GET", "/api/save")).json()).toEqual({ progresso });
+  });
+
   it("separa o save de cada jogador", async () => {
     const primeira = navegador();
     await primeira("POST", "/api/cadastro", { nome: "Gabi", senha: "segredo1" });

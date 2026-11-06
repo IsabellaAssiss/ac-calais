@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { INGREDIENTES, type Ingrediente, type MonstroId } from "./conteudo.ts";
+import { IDS_INGREDIENTES, IDS_MONSTROS, type Ingrediente, type MonstroId } from "./conteudo.ts";
 import {
   avaliarLanche,
   comprarPote,
@@ -191,19 +191,18 @@ describe("Fantasma", () => {
 });
 
 describe("invariante dos itens fixos", () => {
-  const monstros: MonstroId[] = ["dracula", "lobisomem", "mumia", "zumbi", "fantasma"];
-  const ingredientes = Object.keys(INGREDIENTES) as Ingrediente[];
-  const casos = monstros.flatMap((monstro) =>
+  const casos = IDS_MONSTROS.flatMap((monstro) =>
     (["carne", "queijo"] as Ingrediente[]).map((fixo) => [monstro, fixo] as const),
   );
 
   it.each(casos)("%s com Pão + %s pode ser totalmente atendido", (monstro, fixo) => {
-    const perfeitos = ingredientes.flatMap((a) =>
-      ingredientes.filter(
-        (b) => avaliarLanche(cliente(monstro, fixo), ["pao", fixo, a, b]) === "perfeito",
+    const podeSerPerfeito = IDS_INGREDIENTES.some((primeira) =>
+      IDS_INGREDIENTES.some(
+        (segunda) =>
+          avaliarLanche(cliente(monstro, fixo), ["pao", fixo, primeira, segunda]) === "perfeito",
       ),
     );
-    expect(perfeitos.length).toBeGreaterThan(0);
+    expect(podeSerPerfeito).toBe(true);
   });
 });
 

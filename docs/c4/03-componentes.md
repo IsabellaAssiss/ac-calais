@@ -17,7 +17,7 @@ C4Component
     Component(apiCliente, "Cliente da API", "src/api.ts", "Chamadas HTTP ao servidor")
     Component(regras, "Regras", "src/game/jogo.ts", "Avaliação do lanche, sorteio, pagamento e loja")
     Component(conteudo, "Conteúdo", "src/game/conteudo.ts", "Ingredientes, monstros, regras e falas")
-    Component(leitor, "Leitor de save", "src/game/save.ts", "Valida o formato do progresso")
+    Component(leitor, "Leitor de save", "src/game/save.ts", "Valida o progresso e completa saves anteriores ao Fantasma")
   }
 
   Container_Ext(api, "Servidor", "Node, Express")
@@ -42,7 +42,7 @@ C4Component
   Container_Boundary(api, "Servidor") {
     Component(entrada, "Inicialização", "server/index.ts", "Cria a pasta do banco, serve dist/ e abre a porta")
     Component(rotas, "Aplicação", "server/app.ts", "Rotas de cadastro, entrada, saída, sessão e save")
-    Component(leitor, "Leitor de save", "src/game/save.ts", "Valida o formato do progresso")
+    Component(leitor, "Leitor de save", "src/game/save.ts", "Valida o progresso e completa saves anteriores ao Fantasma")
   }
 
   ContainerDb(banco, "Banco", "SQLite")

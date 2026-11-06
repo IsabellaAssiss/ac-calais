@@ -1,16 +1,22 @@
-import { IDS_MONSTROS } from "./conteudo.ts";
+import { IDS_MONSTROS, type MonstroId } from "./conteudo.ts";
 import type { Livro, Progresso } from "./jogo.ts";
 
-type Pagina = { regra?: unknown; mania?: unknown };
+type PaginaNoSave = { regra?: unknown; mania?: unknown } | undefined;
 
-/** Página ausente vem de um save anterior à chegada do monstro, então fica em branco. */
+/** Monstros que chegaram depois dos primeiros saves: esses saves não têm a página deles. */
+const MONSTROS_POSTERIORES: MonstroId[] = ["fantasma"];
+
 function lerLivro(dado: object): Livro | null {
-  const paginas = dado as Record<string, Pagina | undefined>;
+  const paginas = dado as Record<string, PaginaNoSave>;
   const livro = {} as Livro;
   for (const id of IDS_MONSTROS) {
-    const { regra = false, mania = false } = paginas[id] ?? {};
-    if (typeof regra !== "boolean" || typeof mania !== "boolean") return null;
-    livro[id] = { regra, mania };
+    const pagina = paginas[id];
+    if (pagina === undefined && MONSTROS_POSTERIORES.includes(id)) {
+      livro[id] = { regra: false, mania: false };
+      continue;
+    }
+    if (typeof pagina?.regra !== "boolean" || typeof pagina?.mania !== "boolean") return null;
+    livro[id] = { regra: pagina.regra, mania: pagina.mania };
   }
   return livro;
 }

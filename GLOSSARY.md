@@ -37,7 +37,7 @@ Um dos cinco tipos de cliente: Drácula, Lobisomem, Múmia, Zumbi ou Fantasma.
 _Avoid_: Vampiro, personagem
 
 **Ingrediente**:
-Um dos 9 componentes disponíveis na estação de montagem: Pão, Carne, Queijo, Picles, Molho vermelho, Alho, Sal de prata, Cérebro e Sorvete de neblina.
+Um dos 9 alimentos disponíveis na estação de montagem: Pão, Carne, Queijo, Picles, Molho vermelho, Alho, Sal de prata, Cérebro e Sorvete de neblina.
 _Avoid_: Item, componente
 
 **Lanche**:
