@@ -1,5 +1,7 @@
 # Resumo da noite
 
+> Atualização: to-spec e to-tickets foram usadas depois, nas issues #8, #9 e #10.
+
 **O que você pediu e não foi feito:** `to-spec` e `to-tickets` não foram usadas, então o incremento **não** teve o processo completo. As duas skills estão configuradas para só você poder invocá-las, e o erro retornado pedia para não reproduzir o fluxo delas. Detalhes em `docs/pendencias.md`.
 
 ## O que ficou pronto

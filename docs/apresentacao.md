@@ -1,5 +1,7 @@
 # Dados para a apresentação
 
+> Atualização: to-spec e to-tickets foram usadas depois, nas issues #8, #9 e #10.
+
 Dados conferidos em 2026-11-06 no repositório, nas issues e no diário. Campos que dependem de você, como o que foi feito à mão, não estão aqui.
 
 ## O problema
