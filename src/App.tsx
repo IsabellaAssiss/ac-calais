@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { buscarSessao, carregarSave, enviarSave, sair } from "./api.ts";
 import { progressoInicial, type Progresso } from "./game/jogo.ts";
 import { Jogo } from "./Jogo.tsx";
+import { TelaCarregamento, TelaTitulo } from "./ui/TelaAbertura.tsx";
 import { TelaLogin } from "./ui/TelaLogin.tsx";
 
 type Estado =
@@ -30,6 +31,8 @@ function Moldura({ children }: { children: ReactNode }) {
 
 export function App() {
   const [estado, setEstado] = useState<Estado>({ fase: "carregando" });
+  const [abertura, setAbertura] = useState<"carregamento" | "titulo" | "encerrada">("carregamento");
+  const terminarCarregamento = useCallback(() => setAbertura("titulo"), []);
   const [falhaAoSalvar, setFalhaAoSalvar] = useState(false);
   // Envia um save de cada vez, para o último nunca ser sobrescrito por um anterior.
   const filaDeSaves = useRef(Promise.resolve());
@@ -64,6 +67,20 @@ export function App() {
     setEstado({ fase: "login" });
   }
 
+  if (abertura === "carregamento") {
+    return (
+      <Moldura>
+        <TelaCarregamento aoTerminar={terminarCarregamento} />
+      </Moldura>
+    );
+  }
+  if (abertura === "titulo") {
+    return (
+      <Moldura>
+        <TelaTitulo aoJogar={() => setAbertura("encerrada")} />
+      </Moldura>
+    );
+  }
   if (estado.fase === "carregando") {
     return (
       <Moldura>
