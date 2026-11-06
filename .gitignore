@@ -45,6 +45,9 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
+# Permissões locais do Claude Code
+.claude/settings.local.json
+
 # Sistema operacional
 .DS_Store
 Thumbs.db
