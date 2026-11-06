@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import type { MonstroId } from "../game/conteudo.ts";
 import type { Resultado } from "../game/jogo.ts";
 import { RetratoMonstro } from "./RetratoMonstro.tsx";
@@ -21,14 +21,20 @@ const FAISCAS = Array.from({ length: 20 }, (_, i) => {
   };
 });
 
-const MOEDAS = Array.from({ length: 28 }, (_, i) => ({
+/** Cada moeda sai do monstro, abre para um lado e voa até o pote de gorjetas. */
+const MOEDAS = Array.from({ length: 14 }, (_, i) => ({
   estilo: variaveis({
-    "--x": `${(i * 37) % 100}%`,
-    "--atraso": `${((i * 7) % 12) * 0.12}s`,
-    "--duracao": `${1.3 + (i % 4) * 0.25}s`,
-    "--tamanho": `${1.6 + (i % 3) * 0.6}rem`,
+    "--abre-x": `${((i * 53) % 240) - 120}px`,
+    "--abre-y": `${-60 - ((i * 37) % 110)}px`,
+    "--atraso": `${0.15 + i * 0.07}s`,
   }),
 }));
+
+const PONTAS_DO_BOOM = Array.from({ length: 28 }, (_, i) => {
+  const angulo = (i / 28) * 2 * Math.PI;
+  const raio = i % 2 === 0 ? 118 : 74 + (i % 3) * 8;
+  return `${Math.round(130 + Math.cos(angulo) * raio)},${Math.round(130 + Math.sin(angulo) * raio)}`;
+}).join(" ");
 
 const BRILHOS = Array.from({ length: 6 }, (_, i) => {
   const angulo = (i / 6) * 2 * Math.PI;
@@ -46,6 +52,12 @@ export function EfeitosDaTela({ resultado }: { resultado: Resultado }) {
   if (resultado === "desastre") {
     return (
       <div className="efeitos efeitos-desastre" aria-hidden="true">
+        <div className="boom">
+          <svg viewBox="0 0 260 260">
+            <polygon points={PONTAS_DO_BOOM} />
+          </svg>
+          <strong>BOOM!</strong>
+        </div>
         {FAISCAS.map(({ emoji, estilo }, i) => (
           <span key={i} className="faisca" style={estilo}>
             {emoji}
@@ -58,9 +70,7 @@ export function EfeitosDaTela({ resultado }: { resultado: Resultado }) {
     return (
       <div className="efeitos" aria-hidden="true">
         {MOEDAS.map(({ estilo }, i) => (
-          <span key={i} className="moeda" style={estilo}>
-            🪙
-          </span>
+          <span key={i} className="moeda-voando" style={estilo} />
         ))}
       </div>
     );
@@ -94,11 +104,11 @@ function DesastreDoMonstro({ monstro }: { monstro: MonstroId }) {
   }
 }
 
-function Reclamacao({ cara, texto }: { cara: string; texto: string }) {
+function Reclamacao({ cara, children }: { cara: string; children: ReactNode }) {
   return (
     <>
       <span className="cara-feia">{cara}</span>
-      <span className="nuvem-reclamacao">{texto}</span>
+      <span className="nuvem-reclamacao">{children}</span>
     </>
   );
 }
@@ -112,8 +122,14 @@ export function Monstro({ monstro, resultado }: { monstro: MonstroId; resultado?
       </div>
       <div className="monstro-deco" aria-hidden="true">
         {resultado === "desastre" && <DesastreDoMonstro monstro={monstro} />}
-        {resultado === "maniaNaoAtendida" && <Reclamacao cara="😒" texto="#@$%!" />}
-        {resultado === "pedidoErrado" && <Reclamacao cara="🤨" texto="???" />}
+        {resultado === "maniaNaoAtendida" && (
+          <Reclamacao cara="😒">
+            <svg className="rabisco" viewBox="0 0 80 40">
+              <path d="M4 22 C12 2 20 38 28 16 S42 4 38 26 S58 36 52 14 S70 6 76 22" />
+            </svg>
+          </Reclamacao>
+        )}
+        {resultado === "pedidoErrado" && <Reclamacao cara="🤨">???</Reclamacao>}
       </div>
     </div>
   );
@@ -141,7 +157,7 @@ export function NovaAnotacao() {
           </span>
         ))}
       </span>
-      Nova anotação no Livro!
+      NOVA ANOTAÇÃO NO LIVRO!
     </p>
   );
 }
