@@ -112,7 +112,7 @@ export function App() {
         </button>
       </div>
       <Moldura>
-        <Jogo progressoSalvo={estado.progresso} salvar={salvar} />
+        <Jogo progressoSalvo={estado.progresso} salvar={salvar} aoSair={aoSair} />
         {falhaAoSalvar && (
           <p className="erro erro-save" role="alert">
             Não foi possível salvar o progresso. Verifique o servidor.

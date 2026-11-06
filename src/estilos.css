@@ -60,6 +60,13 @@ body {
   border-radius: 999px;
 }
 
+/* Em janelas estreitas a etiqueta cobriria o HUD; o Sair continua na tela de pausa. */
+@media (max-width: 1040px), (max-height: 660px) {
+  .conta {
+    display: none;
+  }
+}
+
 /* Botões */
 
 button {

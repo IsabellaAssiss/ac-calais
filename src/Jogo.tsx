@@ -16,10 +16,11 @@ import { TelaNoite } from "./ui/TelaNoite.tsx";
 type Props = {
   progressoSalvo: Progresso;
   salvar: (progresso: Progresso) => void;
+  aoSair: () => void;
 };
 
 /** O jogo só salva ao fim da noite, então fechá-lo no meio recomeça aquela noite. */
-export function Jogo({ progressoSalvo, salvar }: Props) {
+export function Jogo({ progressoSalvo, salvar, aoSair }: Props) {
   const [progresso, setProgresso] = useState(progressoSalvo);
   const [noite, setNoite] = useState<Noite>(() => iniciarNoite(progressoSalvo));
   const [fimDeDia, setFimDeDia] = useState(false);
@@ -59,7 +60,13 @@ export function Jogo({ progressoSalvo, salvar }: Props) {
           aoProximaNoite={aoProximaNoite}
         />
       ) : (
-        <TelaNoite noite={noite} aoServir={aoServir} aoSeguir={aoSeguir} aoAbrirLivro={abrirLivro} />
+        <TelaNoite
+          noite={noite}
+          aoServir={aoServir}
+          aoSeguir={aoSeguir}
+          aoAbrirLivro={abrirLivro}
+          aoSair={aoSair}
+        />
       )}
       {livroAberto && <LivroDeManias livro={noite.livro} aoFechar={() => setLivroAberto(false)} />}
     </>

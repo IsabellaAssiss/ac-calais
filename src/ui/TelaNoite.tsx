@@ -20,9 +20,10 @@ type Props = {
   aoServir: (lanche: Ingrediente[]) => void;
   aoSeguir: () => void;
   aoAbrirLivro: () => void;
+  aoSair: () => void;
 };
 
-export function TelaNoite({ noite, aoServir, aoSeguir, aoAbrirLivro }: Props) {
+export function TelaNoite({ noite, aoServir, aoSeguir, aoAbrirLivro, aoSair }: Props) {
   const [reacaoVisivel, setReacaoVisivel] = useState(false);
   const [ultimoLanche, setUltimoLanche] = useState<Ingrediente[]>([]);
   const [pausado, setPausado] = useState(false);
@@ -82,6 +83,9 @@ export function TelaNoite({ noite, aoServir, aoSeguir, aoAbrirLivro }: Props) {
           <h2>Pausado</h2>
           <button className="botao-principal" autoFocus onClick={() => setPausado(false)}>
             Continuar
+          </button>
+          <button className="botao-secundario" onClick={aoSair}>
+            Sair
           </button>
         </div>
       )}
