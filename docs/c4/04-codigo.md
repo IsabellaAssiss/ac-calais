@@ -11,6 +11,7 @@ classDiagram
     +number noite
     +boolean temPoteDeGorjetas
     +Livro livro
+    +GanhosDaNoite fimDeDiaPendente
   }
   class Noite {
     +number numero
@@ -55,6 +56,7 @@ classDiagram
     +avaliarLanche(cliente, lanche) Resultado
     +servir(noite, lanche) Noite
     +encerrarNoite(progresso, noite) Progresso
+    +seguirParaProximaNoite(progresso) Progresso
     +comprarPote(progresso) Progresso
   }
 

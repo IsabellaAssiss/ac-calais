@@ -9,4 +9,4 @@ O jogo será apresentado no dia seguinte ao início do projeto, então priorizam
 
 ## Consequences
 
-Quando o login está ativo, ele é a primeira tela de quem não tem sessão, quem tem sessão válida vai direto ao jogo, e o save passa a ficar no banco, sem migrar o que estava no `localStorage`. O jogo só salva ao fim da noite, então fechá-lo no meio recomeça aquela noite.
+Quando o login está ativo, ele é a primeira tela de quem não tem sessão, quem tem sessão válida vai direto ao jogo, e o save passa a ficar no banco, sem migrar o que estava no `localStorage`. O jogo salva ao encerrar a noite, ao comprar na loja e ao seguir para a próxima noite, mas nunca no meio de uma noite: fechá-lo nesse momento recomeça aquela noite, e fechá-lo na tela de fim de dia volta para ela.

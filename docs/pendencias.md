@@ -3,7 +3,6 @@
 ## Para você decidir
 
 - **Sorteio de 4 dos 5 monstros:** você pediu que o Fantasma entrasse no sorteio, e, para manter os 5 clientes, cada noite passou a deixar um monstro de fora. A decisão está no ADR-0003 e precisa da sua confirmação.
-- **Issue #1:** recarregar a página na tela de fim de dia pula a loja daquela noite. Corrigir exige mudar o formato do save.
 - **Issue #5:** sessões do servidor nunca expiram. O impacto é baixo enquanto o jogo roda só na máquina local.
 
 ## Para você preencher

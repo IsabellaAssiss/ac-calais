@@ -97,6 +97,17 @@ describe("save", () => {
     expect(await (await depois("GET", "/api/save")).json()).toEqual({ progresso });
   });
 
+  it("devolve o fim de dia pendente depois de um novo login", async () => {
+    const pendente = { ...progresso, fimDeDiaPendente: { pagamentos: 50, gorjetas: 25 } };
+    const pedir = navegador();
+    await pedir("POST", "/api/cadastro", { nome: "Gabi", senha: "segredo1" });
+    expect((await pedir("PUT", "/api/save", pendente)).status).toBe(204);
+
+    const depois = navegador();
+    await depois("POST", "/api/entrar", { nome: "Gabi", senha: "segredo1" });
+    expect(await (await depois("GET", "/api/save")).json()).toEqual({ progresso: pendente });
+  });
+
   it("recusa save inválido", async () => {
     const pedir = navegador();
     await pedir("POST", "/api/cadastro", { nome: "Fabi", senha: "segredo1" });

@@ -4,6 +4,7 @@ import {
   encerrarNoite,
   iniciarNoite,
   noiteTerminou,
+  seguirParaProximaNoite,
   servir,
   type Noite,
   type Progresso,
@@ -19,11 +20,10 @@ type Props = {
   aoSair: () => void;
 };
 
-/** O jogo só salva ao fim da noite, então fechá-lo no meio recomeça aquela noite. */
+/** O jogo não salva no meio da noite, então fechá-lo nesse momento recomeça aquela noite. */
 export function Jogo({ progressoSalvo, salvar, aoSair }: Props) {
   const [progresso, setProgresso] = useState(progressoSalvo);
   const [noite, setNoite] = useState<Noite>(() => iniciarNoite(progressoSalvo));
-  const [fimDeDia, setFimDeDia] = useState(false);
   const [livroAberto, setLivroAberto] = useState(false);
 
   function atualizarESalvar(novo: Progresso) {
@@ -38,22 +38,23 @@ export function Jogo({ progressoSalvo, salvar, aoSair }: Props) {
   function aoSeguir() {
     if (noiteTerminou(noite)) {
       atualizarESalvar(encerrarNoite(progresso, noite));
-      setFimDeDia(true);
     }
   }
 
   function aoProximaNoite() {
-    setNoite(iniciarNoite(progresso));
-    setFimDeDia(false);
+    const seguinte = seguirParaProximaNoite(progresso);
+    atualizarESalvar(seguinte);
+    setNoite(iniciarNoite(seguinte));
   }
 
   const abrirLivro = () => setLivroAberto(true);
 
   return (
     <>
-      {fimDeDia ? (
+      {progresso.fimDeDiaPendente ? (
         <TelaFimDeDia
-          noite={noite}
+          numeroDaNoite={progresso.noite - 1}
+          ganhos={progresso.fimDeDiaPendente}
           progresso={progresso}
           aoComprarPote={() => atualizarESalvar(comprarPote(progresso))}
           aoAbrirLivro={abrirLivro}

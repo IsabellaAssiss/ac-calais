@@ -17,7 +17,7 @@ O desfecho de servir um lanche a um cliente: o resultado, o valor pago e a gorje
 _Avoid_: Pedido, venda
 
 **Progresso**:
-O que o jogador mantém entre noites: dinheiro, desbloqueio, Livro de Manias e número da próxima noite.
+O que o jogador mantém entre noites: dinheiro, desbloqueio, Livro de Manias, número da próxima noite e, enquanto ele não segue para a próxima noite, os ganhos da noite encerrada.
 _Avoid_: Estado, perfil
 
 **Tela de fim de dia**:

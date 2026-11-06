@@ -8,6 +8,7 @@ import {
   iniciarNoite,
   noiteTerminou,
   progressoInicial,
+  seguirParaProximaNoite,
   servir,
   sortearClientes,
   type Cliente,
@@ -231,6 +232,12 @@ describe("progresso entre noites", () => {
     expect(encerrarNoite(inicial, noite)).toMatchObject({ dinheiro: 75, noite: 2 });
   });
 
+  it("encerrar a noite deixa o fim de dia pendente, com os ganhos da noite", () => {
+    const inicial = progressoInicial();
+    const noite = jogarNoitePerfeita(iniciarNoite(inicial, rngSequencial(1)));
+    expect(encerrarNoite(inicial, noite).fimDeDiaPendente).toEqual({ pagamentos: 50, gorjetas: 25 });
+  });
+
   it("acumula dinheiro e mantém o Livro ao encerrar a noite", () => {
     const inicial = { ...progressoInicial(), dinheiro: 20 };
     const noite = servir(noiteCom([cliente("dracula")]), ["pao", "carne", "alho", "queijo"]);
@@ -250,6 +257,29 @@ describe("progresso entre noites", () => {
 
     const rico = { ...comprado, dinheiro: 100 };
     expect(comprarPote(rico)).toEqual(rico);
+  });
+
+  it("comprar o Pote de Gorjetas mantém o fim de dia pendente", () => {
+    const pendente = {
+      ...progressoInicial(),
+      dinheiro: 30,
+      fimDeDiaPendente: { pagamentos: 50, gorjetas: 25 },
+    };
+    expect(comprarPote(pendente).fimDeDiaPendente).toEqual({ pagamentos: 50, gorjetas: 25 });
+  });
+
+  it("seguir para a próxima noite encerra a pendência e mantém o resto do Progresso", () => {
+    const pendente = {
+      ...progressoInicial(),
+      dinheiro: 75,
+      noite: 2,
+      fimDeDiaPendente: { pagamentos: 50, gorjetas: 25 },
+    };
+    expect(seguirParaProximaNoite(pendente)).toEqual({
+      ...progressoInicial(),
+      dinheiro: 75,
+      noite: 2,
+    });
   });
 
   it("a noite seguinte herda o Pote comprado", () => {

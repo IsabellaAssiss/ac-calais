@@ -20,7 +20,11 @@ export type Progresso = {
   noite: number;
   temPoteDeGorjetas: boolean;
   livro: Livro;
+  /** Ganhos da noite encerrada, enquanto o jogador não segue para a próxima noite. */
+  fimDeDiaPendente?: GanhosDaNoite;
 };
+
+export type GanhosDaNoite = { pagamentos: number; gorjetas: number };
 
 export type Atendimento = {
   cliente: Cliente;
@@ -141,7 +145,7 @@ export function noiteTerminou(noite: Noite): boolean {
   return clienteAtual(noite) === null;
 }
 
-export function ganhosDaNoite(noite: Noite) {
+export function ganhosDaNoite(noite: Noite): GanhosDaNoite {
   return noite.atendimentos.reduce(
     (total, a) => ({
       pagamentos: total.pagamentos + a.pagamento,
@@ -158,7 +162,13 @@ export function encerrarNoite(progresso: Progresso, noite: Noite): Progresso {
     dinheiro: progresso.dinheiro + pagamentos + gorjetas,
     noite: noite.numero + 1,
     livro: noite.livro,
+    fimDeDiaPendente: { pagamentos, gorjetas },
   };
+}
+
+export function seguirParaProximaNoite(progresso: Progresso): Progresso {
+  const { fimDeDiaPendente: _encerrado, ...seguinte } = progresso;
+  return seguinte;
 }
 
 export function podeComprarPote(progresso: Progresso): boolean {

@@ -41,6 +41,5 @@ Ele atravessa a parede sem pagar se receber Sal de prata. Como é sorteado, pode
 
 ## Cuidados
 
-- **Não recarregue a página na tela de fim de dia.** O jogo pula para a noite seguinte, e a loja só volta ao fim dela (issue #1).
 - **Sair** volta para a tela de login, e o progresso continua salvo. Em janelas pequenas, ele fica na tela de pausa.
 - **Pausa e som:** a pausa congela as animações, mas o jogo não tem cronômetro. O botão de som fica no canto superior direito.
